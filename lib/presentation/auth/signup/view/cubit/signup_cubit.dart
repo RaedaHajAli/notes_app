@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fullnoteapp/presentation/resources/strings_manager.dart';
 
-import '../../../../app/app_prefs.dart';
-import '../../../../app/di.dart';
+import '../../../../../app/app_prefs.dart';
+import '../../../../../app/di.dart';
 
-import '../../../common/widgets/widgets.dart';
-import '../../../resources/route_manager.dart';
+import '../../../../common/widgets/widgets.dart';
+import '../../../../resources/route_manager.dart';
 import '../../viewmodel/signup_viewmodel.dart';
 import 'signup_state.dart';
 

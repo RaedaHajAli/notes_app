@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:fullnoteapp/app/di.dart';
-import 'package:fullnoteapp/presentation/login/cubit/login_cubit.dart';
+import 'package:fullnoteapp/presentation/auth/login/cubit/login_cubit.dart';
 
-import 'package:fullnoteapp/presentation/login/view/login_view.dart';
-import 'package:fullnoteapp/presentation/signup/view/cubit/signup_cubit.dart';
+import 'package:fullnoteapp/presentation/auth/login/view/login_view.dart';
+import 'package:fullnoteapp/presentation/auth/signup/view/cubit/signup_cubit.dart';
 
-import 'package:fullnoteapp/presentation/signup/view/signup_view.dart';
+import 'package:fullnoteapp/presentation/auth/signup/view/signup_view.dart';
 
 import '../home/view/home_view.dart';
 

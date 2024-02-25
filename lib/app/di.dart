@@ -7,14 +7,14 @@ import 'package:fullnoteapp/data/network/network_info.dart';
 import 'package:fullnoteapp/data/repository/repository_impl.dart';
 import 'package:fullnoteapp/domain/repository/repository.dart';
 
-import 'package:fullnoteapp/presentation/signup/viewmodel/signup_viewmodel.dart';
+import 'package:fullnoteapp/presentation/auth/signup/viewmodel/signup_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/usecase/login_usecase.dart';
 import '../domain/usecase/signup_usecase.dart';
-import '../presentation/login/viewmodel/login_viewmodel.dart';
+import '../presentation/auth/login/viewmodel/login_viewmodel.dart';
 
 final instance = GetIt.instance;
 Future<void> initModule() async {

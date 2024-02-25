@@ -4,28 +4,28 @@ import 'package:dartz/dartz.dart';
 
 import 'package:fullnoteapp/app/functions.dart';
 
-import 'package:fullnoteapp/domain/usecase/signup_usecase.dart';
+
 import 'package:fullnoteapp/presentation/base/base_viewmodel.dart';
 import 'package:fullnoteapp/presentation/common/freezed_data_classes.dart';
 
-import '../../../data/network/failure.dart';
-import '../../../domain/models/models.dart';
-import '../../resources/strings_manager.dart';
+import '../../../../data/network/failure.dart';
+import '../../../../domain/models/models.dart';
+import '../../../../domain/usecase/login_usecase.dart';
+import '../../../resources/strings_manager.dart';
 
-class SignupViewModel extends BaseViewModel
-    with SignupViewModelInputs, SignupViewModelOutputs {
-  final StreamController _userNameController =
-      StreamController<String>.broadcast();
+class LoginViewModel extends BaseViewModel
+    with LoginViewModelInputs, LoginViewModelOutputs {
+ 
   final StreamController _emailController =
       StreamController<String>.broadcast();
   final StreamController _passwordController =
       StreamController<String>.broadcast();
   final StreamController _allInputsStreamController =
       StreamController<void>.broadcast();
-  SignupObject signupObject = SignupObject('', '', '');
-  final SignupUseCase _signupUseCase;
+  LoginObject loginObject =LoginObject('', '');
+  final LoginUseCase _loginUseCase;
 
-  SignupViewModel(this._signupUseCase);
+  LoginViewModel(this._loginUseCase);
 
   @override
   void start() {
@@ -34,15 +34,14 @@ class SignupViewModel extends BaseViewModel
 
   @override
   void dispose() {
-    _userNameController.close();
+    
     _emailController.close();
     _passwordController.close();
     super.dispose();
   }
   //inputs
 
-  @override
-  Sink get inputUserName => _userNameController.sink;
+  
   @override
   Sink get inputEmail => _emailController.sink;
 
@@ -52,24 +51,15 @@ class SignupViewModel extends BaseViewModel
   @override
   Sink get inputAllInputsValid => _allInputsStreamController.sink;
 
-  @override
-  setUserName(String userName) {
-    inputUserName.add(userName);
-    if (_isUserNameValid(userName)) {
-      signupObject = signupObject.copyWith(userName: userName);
-    } else {
-      signupObject = signupObject.copyWith(userName: '');
-    }
-    _validate();
-  }
+  
 
   @override
   setEmail(String email) {
     inputEmail.add(email);
     if (isEmailValid(email)) {
-      signupObject = signupObject.copyWith(email: email);
+     loginObject = loginObject.copyWith(email: email);
     } else {
-      signupObject = signupObject.copyWith(email: '');
+      loginObject = loginObject.copyWith(email: '');
     }
     _validate();
   }
@@ -78,28 +68,23 @@ class SignupViewModel extends BaseViewModel
   setPassword(String password) {
     inputPassword.add(password);
     if (_isPasswordValid(password)) {
-      signupObject = signupObject.copyWith(password: password);
+     loginObject =loginObject.copyWith(password: password);
     } else {
-      signupObject = signupObject.copyWith(password: '');
+     loginObject = loginObject.copyWith(password: '');
     }
     _validate();
   }
 
   @override
-  Future<Either<Failure, User>> signup() async {
-    return await _signupUseCase.execute(SignupUseCaseInput(
-            signupObject.userName, signupObject.email, signupObject.password));
+  Future<Either<Failure, User>> login() async {
+    return await _loginUseCase.execute(LoginUseCaseInput(
+            loginObject.email, loginObject.password));
      
   }
 
 //outputs
 
-  @override
-  Stream<bool> get outputIsUserNameValid =>
-      _userNameController.stream.map((userName) => _isUserNameValid(userName));
-  @override
-  Stream<String?> get outputErrorUserName => outputIsUserNameValid.map(
-      (isUserNameValid) => isUserNameValid ? null : AppStrings.userNameError);
+ 
 
   @override
   Stream<bool> get outputIsEmailValid =>
@@ -120,9 +105,7 @@ class SignupViewModel extends BaseViewModel
       _allInputsStreamController.stream.map((_) => _areAllInputsValid());
 
   //private functions
-  bool _isUserNameValid(String userName) {
-    return userName.length >= 8;
-  }
+ 
 
   bool _isPasswordValid(String password) {
     return password.length >= 6;
@@ -133,25 +116,24 @@ class SignupViewModel extends BaseViewModel
   }
 
   bool _areAllInputsValid() {
-    return signupObject.userName.isNotEmpty &&
-        signupObject.email.isNotEmpty &&
-        signupObject.password.isNotEmpty;
+    return 
+       loginObject.email.isNotEmpty &&
+        loginObject.password.isNotEmpty;
   }
 }
 
-mixin SignupViewModelInputs {
-  setUserName(String userName);
+mixin LoginViewModelInputs {
+
   setEmail(String email);
   setPassword(String password);
-  signup();
-  Sink get inputUserName;
+  login();
+  
   Sink get inputEmail;
   Sink get inputPassword;
   Sink get inputAllInputsValid;
 }
-mixin SignupViewModelOutputs {
-  Stream<bool> get outputIsUserNameValid;
-  Stream<String?> get outputErrorUserName;
+mixin LoginViewModelOutputs {
+ 
   Stream<bool> get outputIsEmailValid;
   Stream<String?> get outputErrorEmail;
   Stream<bool> get outputIsPasswordeValid;
