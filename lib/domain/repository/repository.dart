@@ -15,5 +15,5 @@ abstract class Repository {
       EditNoteRequest editNoteRequest);
   Future<Either<Failure, OperationStatus>> delete(
       DeleteNoteRequest deleteNoteRequest);
-  Future<Either<Failure, GetNotes>> view(ViewNotesRequest viewNotesRequest);
+  Future<Either<Failure, NotesList>> view(ViewNotesRequest viewNotesRequest);
 }

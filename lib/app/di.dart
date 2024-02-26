@@ -6,8 +6,11 @@ import 'package:fullnoteapp/data/network/dio_factory.dart';
 import 'package:fullnoteapp/data/network/network_info.dart';
 import 'package:fullnoteapp/data/repository/repository_impl.dart';
 import 'package:fullnoteapp/domain/repository/repository.dart';
+import 'package:fullnoteapp/domain/usecase/delete_note_usecase.dart';
+import 'package:fullnoteapp/domain/usecase/view_note_usecase.dart';
 
 import 'package:fullnoteapp/presentation/auth/signup/viewmodel/signup_viewmodel.dart';
+import 'package:fullnoteapp/presentation/home/viewmodel/home_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,7 +33,7 @@ Future<void> initModule() async {
       RepositoryImpl(instance<RemoteDataSource>(), instance<NetworkInfo>()));
 
   final sharedPrefs = await SharedPreferences.getInstance();
-  
+
   instance.registerLazySingleton<SharedPreferences>(() => sharedPrefs);
 
   instance
@@ -52,5 +55,18 @@ initLoginModule() {
         () => LoginUseCase(instance<Repository>()));
     instance.registerFactory<LoginViewModel>(
         () => LoginViewModel(instance<LoginUseCase>()));
+  }
+}
+
+initHomeModule() {
+  if (!GetIt.I.isRegistered<ViewNoteUseCase>()) {
+    instance.registerFactory<ViewNoteUseCase>(
+        () => ViewNoteUseCase(instance<Repository>()));
+     instance.registerFactory<DeleteNoteUseCase>(
+        () => DeleteNoteUseCase(instance<Repository>()));   
+    instance.registerFactory<HomeViewModel>(() => HomeViewModel(
+        instance<ViewNoteUseCase>(),
+        instance<DeleteNoteUseCase>(),
+        instance<AppPreferences>()));
   }
 }

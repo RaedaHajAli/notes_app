@@ -40,13 +40,13 @@ extension NoteResponseExtension on NoteResponse? {
 }
 
 extension GetNotesResponseExtension on GetNotesResponse? {
-  GetNotes toDomain() {
+  NotesList toDomain() {
     List<Note> notes =
         (this?.notes?.map((noteResponse) => noteResponse.toDomain()) ??
                 const Iterable.empty())
             .cast<Note>()
             .toList();
 
-    return GetNotes(notes: notes);
+    return NotesList(notes: notes);
   }
 }

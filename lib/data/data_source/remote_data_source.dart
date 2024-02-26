@@ -56,11 +56,10 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       DeleteNoteRequest deleteNoteRequest) async {
     return await _appServiceClient.delete(deleteNoteRequest.noteId);
   }
-  
-  @override
-  Future<GetNotesResponse> view(ViewNotesRequest viewNotesRequest)async {
-      return await _appServiceClient.view(viewNotesRequest.userId);
-  }
 
- 
+  @override
+  Future<GetNotesResponse> view(ViewNotesRequest viewNotesRequest) async {
+  
+    return await _appServiceClient.view(viewNotesRequest.userId);
+  }
 }

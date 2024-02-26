@@ -25,7 +25,7 @@ class RouteGenerator {
       case Routes.loginRoute:
         initLoginModule();
         return MaterialPageRoute(
-            builder: (_) =>  BlocProvider<LoginCubit>(
+            builder: (_) => BlocProvider<LoginCubit>(
                   create: (context) => LoginCubit(),
                   child: const LoginView(),
                 ));
@@ -37,6 +37,7 @@ class RouteGenerator {
                   child: const SignupView(),
                 ));
       case Routes.homeRoute:
+        initHomeModule();
         return MaterialPageRoute(builder: (_) => const HomeView());
       default:
         return unDefinedRoute();

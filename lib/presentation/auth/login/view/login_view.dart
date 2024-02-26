@@ -21,6 +21,8 @@ class LoginView extends StatefulWidget {
 class _SignupViewState extends State<LoginView> {
   
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+ 
   @override
   Widget build(BuildContext context) {
     LoginCubit cubit = LoginCubit.get(context);

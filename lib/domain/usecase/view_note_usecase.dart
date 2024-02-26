@@ -8,14 +8,16 @@ import 'package:fullnoteapp/domain/usecase/base_usecase.dart';
 
 import '../repository/repository.dart';
 
-class ViewNoteUseCase implements BaseUseCase<ViewNoteUseCaseInput, GetNotes> {
+class ViewNoteUseCase implements BaseUseCase<ViewNoteUseCaseInput, NotesList> {
   final Repository _repository;
   ViewNoteUseCase(
     this._repository,
   );
   @override
-  Future<Either<Failure, GetNotes>> execute(ViewNoteUseCaseInput input) async {
+  Future<Either<Failure, NotesList>> execute(ViewNoteUseCaseInput input) async {
+    
     return await _repository.view(ViewNotesRequest(userId: input.userId));
+  
   }
 }
 

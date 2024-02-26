@@ -2,7 +2,6 @@
 
 import 'package:dartz/dartz.dart';
 
-
 import '../../domain/mapper/mapper.dart';
 
 import '../../domain/models/models.dart';
@@ -117,9 +116,10 @@ class RepositoryImpl implements Repository {
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
-  
+
   @override
-  Future<Either<Failure, OperationStatus>> delete(DeleteNoteRequest deleteNoteRequest)async {
+  Future<Either<Failure, OperationStatus>> delete(
+      DeleteNoteRequest deleteNoteRequest) async {
     if (await _networkInfo.isConnected) {
       // there is internet connection
 
@@ -150,9 +150,10 @@ class RepositoryImpl implements Repository {
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
-  
+
   @override
-  Future<Either<Failure, OperationStatus>> edit(EditNoteRequest editNoteRequest)async {
+  Future<Either<Failure, OperationStatus>> edit(
+      EditNoteRequest editNoteRequest) async {
     if (await _networkInfo.isConnected) {
       // there is internet connection
 
@@ -183,10 +184,12 @@ class RepositoryImpl implements Repository {
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
-  
+
   @override
-  Future<Either<Failure, GetNotes>> view(ViewNotesRequest viewNotesRequest) async{
-   if (await _networkInfo.isConnected) {
+  Future<Either<Failure, NotesList>> view(
+      ViewNotesRequest viewNotesRequest) async {
+
+    if (await _networkInfo.isConnected) {
       // there is internet connection
 
       try {
@@ -194,7 +197,7 @@ class RepositoryImpl implements Repository {
         if (response.status == ApiInternalStatus.SUCCESS) {
           //success
           //return either right
-
+       
           return Right(response.toDomain());
         } else {
           //failure

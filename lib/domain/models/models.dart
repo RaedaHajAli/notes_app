@@ -53,9 +53,9 @@ class Note {
   });
 }
 
-class GetNotes {
+class NotesList {
   List<Note> notes;
-  GetNotes({
+  NotesList({
     required this.notes,
   });
 }

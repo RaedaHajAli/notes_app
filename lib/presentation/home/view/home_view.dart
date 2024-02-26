@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fullnoteapp/presentation/home/cubit/home_cubit_cubit.dart';
+import 'package:fullnoteapp/presentation/home/cubit/home_cubit_state.dart';
+import 'package:fullnoteapp/presentation/home/viewmodel/home_viewmodel.dart';
 import 'package:fullnoteapp/presentation/resources/color_manager.dart';
-
 
 import '../../../app/app_prefs.dart';
 
@@ -18,41 +21,77 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final AppPreferences _appPreferences = instance<AppPreferences>();
+  HomeCubit cubit = HomeCubit();
+
+  @override
+  void initState() {
+    // HomeViewModel viewModel = instance<HomeViewModel>();
+
+    cubit.homeViewModel.start();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.deepPurple,
-      appBar: AppBar(
-        backgroundColor: AppColor.deepPurple,
-        title: const Text('Notes'),
-        centerTitle: true,
-        elevation: 0,
-        actions: [
-          IconButton(
-              onPressed: () {
-                _appPreferences.logout();
-                Navigator.pushReplacementNamed(context, Routes.loginRoute);
-              },
-              icon: const Icon(Icons.power_settings_new_outlined))
-        ],
-      ),
-      body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-          child: GridView.count(
-              physics: const BouncingScrollPhysics(),
-              crossAxisCount: 2,
-              mainAxisSpacing: 12,
-              crossAxisSpacing: 12,
-              children: List.generate(14, (index) {
-                Color backgroundColor =
-                    AppColor.notesColor[index % AppColor.notesColor.length];
+    // HomeCubit cubit = HomeCubit.get(context);
+    return BlocBuilder<HomeCubit, HomeStates>(
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: AppColor.deepPurple,
+          appBar: AppBar(
+            backgroundColor: AppColor.deepPurple,
+            title: const Text('Notes'),
+            centerTitle: true,
+            elevation: 0,
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    _appPreferences.logout();
+                    Navigator.pushReplacementNamed(context, Routes.loginRoute);
+                  },
+                  icon: const Icon(Icons.power_settings_new_outlined))
+            ],
+          ),
+          body: StreamBuilder<HomeViewObject>(
+              stream: cubit.homeViewModel.outputHomeViewObject,
+              builder: (context, snapshot) {
+                if (snapshot.data?.notes.isEmpty ?? true) {
+                  return const Center(
+                      child: Text(
+                    'There isn\'t any note yet',
+                    style: TextStyle(color: AppColor.white, fontSize: 25),
+                  ));
+                } else {
+                  return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 12),
+                      child: GridView.count(
+                          physics: const BouncingScrollPhysics(),
+                          crossAxisCount:
+                              MediaQuery.of(context).size.width > 600 ? 3 : 2,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                          children: List.generate(snapshot.data!.notes.length,
+                              (index) {
+                            Color backgroundColor = AppColor
+                                .notesColor[index % AppColor.notesColor.length];
 
-                return NoteItem(backgroundColor: backgroundColor);
-              }))),
-      floatingActionButton: const AddFab(),
+                            return NoteItem(
+                              backgroundColor: backgroundColor,
+                              note: snapshot.data!.notes[index],
+                              onPressed: () {
+                                cubit
+                                    .deleteNote(snapshot.data!.notes[index].id);
+                              },
+                              // onPressed: cubit.deleteNote(snapshot.data!.notes[index].id
+                              // ),
+                            );
+                          })));
+                }
+              }),
+          floatingActionButton: const AddFab(),
+        );
+      },
     );
   }
 }
-
-
-
