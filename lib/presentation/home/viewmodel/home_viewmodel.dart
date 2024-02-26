@@ -40,13 +40,11 @@ class HomeViewModel extends BaseViewModel
   }
 
   getNotes() async {
-  
     (await _viewNoteUseCase.execute(ViewNoteUseCaseInput(userId: userId!)))
         .fold((failure) {
       print(failure.message);
     }, (data) {
-    inputHomeViewObject.add(HomeViewObject(notes: data.notes));
-      
+      inputHomeViewObject.add(HomeViewObject(notes: data.notes));
     });
   }
 
@@ -57,6 +55,7 @@ class HomeViewModel extends BaseViewModel
     }, (operationStatus) {
       print(operationStatus.message);
     });
+    getNotes();
   }
 
   @override

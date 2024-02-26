@@ -15,6 +15,6 @@ class HomeCubit extends Cubit<HomeStates> {
 
   deleteNote(int noteId) {
     homeViewModel.deleteNote(noteId);
-    homeViewModel.getNotes();
+    
   }
 }
