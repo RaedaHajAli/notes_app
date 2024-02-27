@@ -17,3 +17,19 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'username': instance.username,
       'email': instance.email,
     };
+
+Note _$NoteFromJson(Map<String, dynamic> json) => Note(
+      id: json['id'] as int,
+      title: json['title'] as String,
+      content: json['content'] as String,
+      image: json['image'] as String,
+      userId: json['userId'] as int,
+    );
+
+Map<String, dynamic> _$NoteToJson(Note instance) => <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'content': instance.content,
+      'image': instance.image,
+      'userId': instance.userId,
+    };

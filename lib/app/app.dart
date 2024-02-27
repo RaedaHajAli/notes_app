@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fullnoteapp/presentation/home/cubit/home_cubit_cubit.dart';
+import 'package:fullnoteapp/presentation/home/cubit/home_cubit.dart';
 import 'package:fullnoteapp/presentation/resources/route_manager.dart';
 
 import '../domain/models/models.dart';

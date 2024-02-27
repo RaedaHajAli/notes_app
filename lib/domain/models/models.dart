@@ -38,11 +38,17 @@ class OperationStatus {
   });
 }
 
+@JsonSerializable()
 class Note {
+  @JsonKey(name: 'id')
   int id;
+  @JsonKey(name: 'title')
   String title;
+  @JsonKey(name: 'content')
   String content;
+  @JsonKey(name: 'image')
   String image;
+  @JsonKey(name: 'userId')
   int userId;
   Note({
     required this.id,
@@ -51,6 +57,8 @@ class Note {
     required this.image,
     required this.userId,
   });
+  factory Note.fromJson(Map<String, dynamic> json) => _$NoteFromJson(json);
+Map<String, dynamic> toJson() =>_$NoteToJson(this);
 }
 
 class NotesList {

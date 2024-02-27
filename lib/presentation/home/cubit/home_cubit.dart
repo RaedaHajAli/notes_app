@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fullnoteapp/presentation/home/cubit/home_cubit_state.dart';
+import 'package:fullnoteapp/presentation/home/cubit/home_state.dart';
 import 'package:fullnoteapp/presentation/home/viewmodel/home_viewmodel.dart';
 
 import '../../../app/di.dart';
@@ -11,10 +11,10 @@ class HomeCubit extends Cubit<HomeStates> {
 
   getNotes() async {
     await homeViewModel.getNotes();
+    // emit(HomeViewSuccessState());
   }
 
   deleteNote(int noteId) {
     homeViewModel.deleteNote(noteId);
-    
   }
 }

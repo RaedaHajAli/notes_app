@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fullnoteapp/presentation/home/cubit/home_cubit_cubit.dart';
-import 'package:fullnoteapp/presentation/home/cubit/home_cubit_state.dart';
+import 'package:fullnoteapp/domain/models/models.dart';
+import 'package:fullnoteapp/presentation/home/cubit/home_cubit.dart';
+import 'package:fullnoteapp/presentation/home/cubit/home_state.dart';
 import 'package:fullnoteapp/presentation/home/viewmodel/home_viewmodel.dart';
 import 'package:fullnoteapp/presentation/resources/color_manager.dart';
 
@@ -25,15 +26,12 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   void initState() {
-    // HomeViewModel viewModel = instance<HomeViewModel>();
-
     cubit.homeViewModel.start();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // HomeCubit cubit = HomeCubit.get(context);
     return BlocBuilder<HomeCubit, HomeStates>(
       builder: (context, state) {
         return Scaffold(
@@ -79,12 +77,17 @@ class _HomeViewState extends State<HomeView> {
                             return NoteItem(
                               backgroundColor: backgroundColor,
                               note: snapshot.data!.notes[index],
-                              onPressed: () {
+                              onPressedDelete: () {
                                 cubit
                                     .deleteNote(snapshot.data!.notes[index].id);
                               },
-                              // onPressed: cubit.deleteNote(snapshot.data!.notes[index].id
-                              // ),
+                              onTapNote: () {
+                                Navigator.pushNamed(
+                                    context, Routes.noteDetailsRoute,
+                                    arguments: snapshot.data!.notes[index].toJson()
+                                    
+                                    );
+                              },
                             );
                           })));
                 }
