@@ -8,7 +8,7 @@ import 'package:fullnoteapp/presentation/auth/login/view/login_view.dart';
 import 'package:fullnoteapp/presentation/auth/signup/view/cubit/signup_cubit.dart';
 
 import 'package:fullnoteapp/presentation/auth/signup/view/signup_view.dart';
-import 'package:fullnoteapp/presentation/note_details/note_details.dart';
+import 'package:fullnoteapp/presentation/note_details/view/note_details_view.dart';
 
 import '../home/view/home_view.dart';
 

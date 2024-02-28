@@ -19,6 +19,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _SignupViewState extends State<LoginView> {
+ 
   
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -38,6 +39,7 @@ class _SignupViewState extends State<LoginView> {
       },
     );
   }
+
 }
 
 class LoginBody extends StatelessWidget {
