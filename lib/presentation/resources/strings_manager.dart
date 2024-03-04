@@ -12,6 +12,7 @@ class AppStrings {
   static const String userNameError = 'User Name must be 8 chars at least';
   static const String emailError = 'Invalid email format';
   static const String passwordError = 'Password must be 6 chars at least';
+  static const String fieldError = 'This field must be 5 chars at least';
 
   static const String noRouteFound = 'No Route Found';
   static const String success = 'Success';
@@ -20,6 +21,8 @@ class AppStrings {
   static const String failureSignup = 'Failure Signup';
   static const String failureLogin = 'Failure Login';
   static const String tryAgain = 'Try again later';
+   static const String photoGallery = 'Open Gallery';
+    static const String photoCamera = 'Open Camera';
 
   //error strings
   static const String unauthorizedError = 'User unauthorized';

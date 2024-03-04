@@ -6,6 +6,7 @@ import 'package:fullnoteapp/data/network/dio_factory.dart';
 import 'package:fullnoteapp/data/network/network_info.dart';
 import 'package:fullnoteapp/data/repository/repository_impl.dart';
 import 'package:fullnoteapp/domain/repository/repository.dart';
+import 'package:fullnoteapp/domain/usecase/add_note_usecase.dart';
 import 'package:fullnoteapp/domain/usecase/delete_note_usecase.dart';
 import 'package:fullnoteapp/domain/usecase/view_note_usecase.dart';
 
@@ -62,11 +63,13 @@ initHomeModule() {
   if (!GetIt.I.isRegistered<ViewNoteUseCase>()) {
     instance.registerFactory<ViewNoteUseCase>(
         () => ViewNoteUseCase(instance<Repository>()));
-     instance.registerFactory<DeleteNoteUseCase>(
-        () => DeleteNoteUseCase(instance<Repository>()));   
+    instance.registerFactory<DeleteNoteUseCase>(
+        () => DeleteNoteUseCase(instance<Repository>()));
+    instance.registerFactory<AddNoteUseCase>(() => AddNoteUseCase(instance<Repository>()));
     instance.registerFactory<HomeViewModel>(() => HomeViewModel(
         instance<ViewNoteUseCase>(),
         instance<DeleteNoteUseCase>(),
+        instance<AddNoteUseCase>(),
         instance<AppPreferences>()));
   }
 }

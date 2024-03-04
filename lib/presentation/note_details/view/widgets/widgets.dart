@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 
 import '../../../resources/color_manager.dart';
 
-class DetailsTextFormField extends StatelessWidget {
-  const DetailsTextFormField({
+class NoteTextFormField extends StatelessWidget {
+  const NoteTextFormField({
     super.key,
     required this.titleController,
     this.maxLines,
+    this.hint, this.errorText, this.onChanged,
   });
 
   final TextEditingController titleController;
   final int? maxLines;
+  final String? hint;
+  final String? errorText;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,11 @@ class DetailsTextFormField extends StatelessWidget {
       keyboardType: TextInputType.text,
       cursorColor: AppColor.grey,
       maxLines: maxLines,
+      onChanged: onChanged,
+      
       decoration: InputDecoration(
+        hintText: hint,
+        errorText:errorText ,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),

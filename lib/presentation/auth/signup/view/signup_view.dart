@@ -6,6 +6,7 @@ import 'package:fullnoteapp/presentation/resources/color_manager.dart';
 import 'package:fullnoteapp/presentation/auth/signup/view/cubit/signup_cubit.dart';
 import 'package:fullnoteapp/presentation/auth/signup/view/cubit/signup_state.dart';
 
+import '../../../common/widgets/widgets.dart';
 import '../../../resources/strings_manager.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 

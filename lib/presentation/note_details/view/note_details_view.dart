@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fullnoteapp/presentation/auth/widgets.dart';
 
 import 'package:fullnoteapp/presentation/resources/color_manager.dart';
 import 'package:fullnoteapp/presentation/resources/images_manager.dart';
 
+import '../../common/widgets/widgets.dart';
 import 'widgets/widgets.dart';
 
 class NoteDetailsView extends StatefulWidget {
@@ -71,12 +71,12 @@ class _NoteDetailsViewState extends State<NoteDetailsView> {
                         child: Form(
                           child: Column(
                             children: [
-                              DetailsTextFormField(
+                              NoteTextFormField(
                                   titleController: titleController),
                               const SizedBox(
                                 height: 12,
                               ),
-                              DetailsTextFormField(
+                              NoteTextFormField(
                                 titleController: contentController,
                                 maxLines: 10,
                               ),
@@ -105,4 +105,3 @@ class _NoteDetailsViewState extends State<NoteDetailsView> {
     );
   }
 }
-

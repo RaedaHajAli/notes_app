@@ -8,6 +8,7 @@ import 'package:fullnoteapp/presentation/auth/login/view/login_view.dart';
 import 'package:fullnoteapp/presentation/auth/signup/view/cubit/signup_cubit.dart';
 
 import 'package:fullnoteapp/presentation/auth/signup/view/signup_view.dart';
+import 'package:fullnoteapp/presentation/home/cubit/home_cubit.dart';
 import 'package:fullnoteapp/presentation/note_details/view/note_details_view.dart';
 
 import '../home/view/home_view.dart';
@@ -40,7 +41,10 @@ class RouteGenerator {
                 ));
       case Routes.homeRoute:
         initHomeModule();
-        return MaterialPageRoute(builder: (_) => const HomeView());
+
+        return MaterialPageRoute(
+            builder: (_) =>  const HomeView(),
+                );
       case Routes.noteDetailsRoute:
         final note = settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(

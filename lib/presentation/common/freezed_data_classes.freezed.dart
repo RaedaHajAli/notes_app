@@ -301,3 +301,155 @@ abstract class _SignupObject implements SignupObject {
   _$$SignupObjectImplCopyWith<_$SignupObjectImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$AddNoteObject {
+  String get title => throw _privateConstructorUsedError;
+  String get content => throw _privateConstructorUsedError;
+  String get imagePath => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AddNoteObjectCopyWith<AddNoteObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AddNoteObjectCopyWith<$Res> {
+  factory $AddNoteObjectCopyWith(
+          AddNoteObject value, $Res Function(AddNoteObject) then) =
+      _$AddNoteObjectCopyWithImpl<$Res, AddNoteObject>;
+  @useResult
+  $Res call({String title, String content, String imagePath});
+}
+
+/// @nodoc
+class _$AddNoteObjectCopyWithImpl<$Res, $Val extends AddNoteObject>
+    implements $AddNoteObjectCopyWith<$Res> {
+  _$AddNoteObjectCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = null,
+    Object? content = null,
+    Object? imagePath = null,
+  }) {
+    return _then(_value.copyWith(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      imagePath: null == imagePath
+          ? _value.imagePath
+          : imagePath // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AddNoteObjectImplCopyWith<$Res>
+    implements $AddNoteObjectCopyWith<$Res> {
+  factory _$$AddNoteObjectImplCopyWith(
+          _$AddNoteObjectImpl value, $Res Function(_$AddNoteObjectImpl) then) =
+      __$$AddNoteObjectImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String title, String content, String imagePath});
+}
+
+/// @nodoc
+class __$$AddNoteObjectImplCopyWithImpl<$Res>
+    extends _$AddNoteObjectCopyWithImpl<$Res, _$AddNoteObjectImpl>
+    implements _$$AddNoteObjectImplCopyWith<$Res> {
+  __$$AddNoteObjectImplCopyWithImpl(
+      _$AddNoteObjectImpl _value, $Res Function(_$AddNoteObjectImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = null,
+    Object? content = null,
+    Object? imagePath = null,
+  }) {
+    return _then(_$AddNoteObjectImpl(
+      null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == imagePath
+          ? _value.imagePath
+          : imagePath // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$AddNoteObjectImpl implements _AddNoteObject {
+  _$AddNoteObjectImpl(this.title, this.content, this.imagePath);
+
+  @override
+  final String title;
+  @override
+  final String content;
+  @override
+  final String imagePath;
+
+  @override
+  String toString() {
+    return 'AddNoteObject(title: $title, content: $content, imagePath: $imagePath)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AddNoteObjectImpl &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.content, content) || other.content == content) &&
+            (identical(other.imagePath, imagePath) ||
+                other.imagePath == imagePath));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, title, content, imagePath);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AddNoteObjectImplCopyWith<_$AddNoteObjectImpl> get copyWith =>
+      __$$AddNoteObjectImplCopyWithImpl<_$AddNoteObjectImpl>(this, _$identity);
+}
+
+abstract class _AddNoteObject implements AddNoteObject {
+  factory _AddNoteObject(
+          final String title, final String content, final String imagePath) =
+      _$AddNoteObjectImpl;
+
+  @override
+  String get title;
+  @override
+  String get content;
+  @override
+  String get imagePath;
+  @override
+  @JsonKey(ignore: true)
+  _$$AddNoteObjectImplCopyWith<_$AddNoteObjectImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
