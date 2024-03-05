@@ -1,28 +1,26 @@
 import 'dart:async';
-import 'package:dartz/dartz.dart';
 
 
 import 'package:fullnoteapp/app/functions.dart';
 
-
 import 'package:fullnoteapp/presentation/base/base_viewmodel.dart';
 import 'package:fullnoteapp/presentation/common/freezed_data_classes.dart';
 
-import '../../../../data/network/failure.dart';
-import '../../../../domain/models/models.dart';
+
 import '../../../../domain/usecase/login_usecase.dart';
 import '../../../resources/strings_manager.dart';
 
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInputs, LoginViewModelOutputs {
- 
   final StreamController _emailController =
       StreamController<String>.broadcast();
   final StreamController _passwordController =
       StreamController<String>.broadcast();
   final StreamController _allInputsStreamController =
       StreamController<void>.broadcast();
-  LoginObject loginObject =LoginObject('', '');
+  StreamController isUserLoggedInSuccessfullyStreamController =
+      StreamController<bool>();
+  LoginObject loginObject = LoginObject('', '');
   final LoginUseCase _loginUseCase;
 
   LoginViewModel(this._loginUseCase);
@@ -34,14 +32,13 @@ class LoginViewModel extends BaseViewModel
 
   @override
   void dispose() {
-    
     _emailController.close();
     _passwordController.close();
+    isUserLoggedInSuccessfullyStreamController.close();
     super.dispose();
   }
   //inputs
 
-  
   @override
   Sink get inputEmail => _emailController.sink;
 
@@ -51,13 +48,11 @@ class LoginViewModel extends BaseViewModel
   @override
   Sink get inputAllInputsValid => _allInputsStreamController.sink;
 
-  
-
   @override
   setEmail(String email) {
     inputEmail.add(email);
     if (isEmailValid(email)) {
-     loginObject = loginObject.copyWith(email: email);
+      loginObject = loginObject.copyWith(email: email);
     } else {
       loginObject = loginObject.copyWith(email: '');
     }
@@ -68,23 +63,26 @@ class LoginViewModel extends BaseViewModel
   setPassword(String password) {
     inputPassword.add(password);
     if (_isPasswordValid(password)) {
-     loginObject =loginObject.copyWith(password: password);
+      loginObject = loginObject.copyWith(password: password);
     } else {
-     loginObject = loginObject.copyWith(password: '');
+      loginObject = loginObject.copyWith(password: '');
     }
     _validate();
   }
 
   @override
-  Future<Either<Failure, User>> login() async {
-    return await _loginUseCase.execute(LoginUseCaseInput(
-            loginObject.email, loginObject.password));
-     
+  login() async {
+    (await _loginUseCase.execute(
+            LoginUseCaseInput(loginObject.email, loginObject.password)))
+        .fold((failure) {
+      print(failure.message);
+    }, (user) {
+       isUserLoggedInSuccessfullyStreamController.add(true);
+      print(user.email);
+    });
   }
 
 //outputs
-
- 
 
   @override
   Stream<bool> get outputIsEmailValid =>
@@ -105,7 +103,6 @@ class LoginViewModel extends BaseViewModel
       _allInputsStreamController.stream.map((_) => _areAllInputsValid());
 
   //private functions
- 
 
   bool _isPasswordValid(String password) {
     return password.length >= 6;
@@ -116,24 +113,20 @@ class LoginViewModel extends BaseViewModel
   }
 
   bool _areAllInputsValid() {
-    return 
-       loginObject.email.isNotEmpty &&
-        loginObject.password.isNotEmpty;
+    return loginObject.email.isNotEmpty && loginObject.password.isNotEmpty;
   }
 }
 
 mixin LoginViewModelInputs {
-
   setEmail(String email);
   setPassword(String password);
   login();
-  
+
   Sink get inputEmail;
   Sink get inputPassword;
   Sink get inputAllInputsValid;
 }
 mixin LoginViewModelOutputs {
- 
   Stream<bool> get outputIsEmailValid;
   Stream<String?> get outputErrorEmail;
   Stream<bool> get outputIsPasswordeValid;

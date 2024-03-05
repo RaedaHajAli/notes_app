@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:fullnoteapp/presentation/auth/login/cubit/login_cubit.dart';
+import 'package:fullnoteapp/presentation/auth/login/viewmodel/login_viewmodel.dart';
 import 'package:fullnoteapp/presentation/resources/color_manager.dart';
 import 'package:fullnoteapp/presentation/resources/route_manager.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-
+import '../../../../app/app_prefs.dart';
+import '../../../../app/di.dart';
 import '../../../common/widgets/widgets.dart';
 import '../../../resources/strings_manager.dart';
 import '../../widgets.dart';
@@ -20,44 +22,57 @@ class LoginView extends StatefulWidget {
 }
 
 class _SignupViewState extends State<LoginView> {
- 
-  
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  LoginViewModel viewModel = instance<LoginViewModel>();
+  AppPreferences _appPreferences = instance<AppPreferences>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
- 
-  @override
-  Widget build(BuildContext context) {
-    LoginCubit cubit = LoginCubit.get(context);
-    return BlocBuilder<LoginCubit, LoginStates>(
-      builder: (context, state) {
-        return ModalProgressHUD(
-          inAsyncCall: cubit.loading,
-          child: Scaffold(
-            backgroundColor: AppColor.deepPurple,
-            body: LoginBody(formKey: formKey, cubit: cubit),
-          ),
-        );
-      },
-    );
+  late LoginCubit cubit;
+
+  _bind() {
+    viewModel.start();
+    _emailController.addListener(() {
+      viewModel.setEmail(_emailController.text);
+    });
+    _passwordController.addListener(() {
+      viewModel.setPassword(_passwordController.text);
+    });
+    viewModel.isUserLoggedInSuccessfullyStreamController.stream
+        .listen((isLoggedIn) {
+      if (isLoggedIn) {
+        //Navigate to home screen
+        _appPreferences.setUserLoggedIn();
+        Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
+
+        // SchedulerBinding.instance.addPostFrameCallback((_) {
+
+        // });
+      }
+    });
   }
 
-}
+  @override
+  void dispose() {
+    _emailController.clear();
+    _passwordController.clear();
+    viewModel.dispose();
 
-class LoginBody extends StatelessWidget {
-  const LoginBody({
-    super.key,
-    required this.formKey,
-    required this.cubit,
-  });
+    super.dispose();
+  }
 
-  final GlobalKey<FormState> formKey;
-  final LoginCubit cubit;
+  @override
+  void initState() {
+    _bind();
+    cubit = LoginCubit.get(context);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Padding(
+    return Scaffold(
+      backgroundColor: AppColor.deepPurple,
+      body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: SingleChildScrollView(
             child: Column(
@@ -66,10 +81,10 @@ class LoginBody extends StatelessWidget {
                 const AuthScreenLogo(),
                 buildLable(AppStrings.email),
                 StreamBuilder<String?>(
-                  stream: cubit.viewModel.outputErrorEmail,
-                  builder: (context, snapshot) {
-                    return buildCustomTextField(
-                   
+                    stream: viewModel.outputErrorEmail,
+                    builder: (context, snapshot) {
+                      return buildCustomTextField(
+                        controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         hint: AppStrings.email,
                         prefix: Icons.email,
@@ -77,72 +92,65 @@ class LoginBody extends StatelessWidget {
                         contentColor: AppColor.white,
                         backgroundColor: AppColor.mediumPurple,
                         errorText: snapshot.data,
-                        onChanged: (email) {
-                          cubit. viewModel.setEmail(email);
-                          }
-                        );
-                  }
-                ),
+                      );
+                    }),
                 const SizedBox(
                   height: 20,
                 ),
                 buildLable(AppStrings.password),
                 StreamBuilder<String?>(
-                  stream: cubit.viewModel.outputErrorPassword,
-                  builder: (context, snapshot) {
-                    return buildCustomTextField(
-                      
-                        keyboardType: TextInputType.visiblePassword,
-                        hint: AppStrings.password,
-                        prefix: Icons.lock,
-                        suffixIcon:cubit.isSecure
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                        borderColor: AppColor.grey.withOpacity(0.1),
-                        contentColor: AppColor.white,
-                        backgroundColor: AppColor.mediumPurple,
-                        obscureText:cubit.isSecure,
-                          suffixPressed: () {
-                            cubit.changeVisibility();
-                          },
-                        errorText: snapshot.data,
-                         onChanged: (password) {
-                           cubit. viewModel.setPassword(password);
-                          }
-                        );
-                  }
-                ),
+                    stream: viewModel.outputErrorPassword,
+                    builder: (context, snapshot) {
+                      return BlocBuilder<LoginCubit, LoginStates>(
+                        builder: (context, state) {
+                          return buildCustomTextField(
+                            controller: _passwordController,
+                            keyboardType: TextInputType.visiblePassword,
+                            hint: AppStrings.password,
+                            prefix: Icons.lock,
+                            suffixIcon: cubit.isSecure
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            borderColor: AppColor.grey.withOpacity(0.1),
+                            contentColor: AppColor.white,
+                            backgroundColor: AppColor.mediumPurple,
+                            obscureText: cubit.isSecure,
+                            suffixPressed: () {
+                              cubit.changeVisibility();
+                            },
+                            errorText: snapshot.data,
+                          );
+                        },
+                      );
+                    }),
                 const SizedBox(
                   height: 20,
                 ),
                 StreamBuilder<bool>(
-                  stream: cubit.viewModel.outputAreAllInputsValid,
-                  builder: (context, snapshot) {
-                    return buildCustomButton(
-                        title: AppStrings.login,
-                        textColor: Colors.white,
-                        backgroundColor: AppColor.pink.withOpacity(0.9),
-                        onPressed: (snapshot.data ?? false)
-                                  ? () {
-                                   cubit.login(context);
-                                    }
-                                  : null
-                        );
-                  }
-                ),
+                    stream: viewModel.outputAreAllInputsValid,
+                    builder: (context, snapshot) {
+                      return buildCustomButton(
+                          title: AppStrings.login,
+                          textColor: Colors.white,
+                          backgroundColor: AppColor.pink.withOpacity(0.9),
+                          onPressed: (snapshot.data ?? false)
+                              ? () {
+                                  viewModel.login();
+                                }
+                              : null);
+                    }),
                 const SizedBox(
                   height: 15,
                 ),
-                 AuthFooter(
-                mainPhrase: AppStrings.dontHaveAccount,
-                buttonTitle: AppStrings.signup,
-                onPressed: () {
-                   Navigator.of(context).pushNamed(
-                            Routes.signupRoute,
-                          );
-                },
-              ),
-                
+                AuthFooter(
+                  mainPhrase: AppStrings.dontHaveAccount,
+                  buttonTitle: AppStrings.signup,
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      Routes.signupRoute,
+                    );
+                  },
+                ),
               ],
             ),
           )),

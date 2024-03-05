@@ -8,7 +8,7 @@ import 'package:fullnoteapp/presentation/resources/color_manager.dart';
 
 import '../../../domain/models/models.dart';
 import '../../resources/route_manager.dart';
-import '../../resources/strings_manager.dart';
+
 import '../viewmodel/home_viewmodel.dart';
 import 'widgets/widgets.dart';
 

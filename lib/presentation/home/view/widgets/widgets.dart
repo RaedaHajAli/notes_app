@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,13 +48,14 @@ class NoteItem extends StatelessWidget {
                   children: [
                     Image.asset(
                       AppImages.logo,
+                     // convertStringToUint8List(note.image),
                       height: 130,
                       width: 130,
                     ),
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
                   child: Text(
                     note.title,
                     overflow: TextOverflow.ellipsis,
@@ -74,6 +77,14 @@ class NoteItem extends StatelessWidget {
       ),
     );
   }
+}
+
+convertStringToUint8List(String imageString) {
+  
+  Uint8List bytesImage = Base64Decoder().convert(imageString);
+  return bytesImage;
+
+
 }
 
 class AddFab extends StatefulWidget {
@@ -201,12 +212,11 @@ class _AddFabState extends State<AddFab> {
                                         onPressed: (snapshot.data ?? false)
                                             ? () {
                                                 cubit.addNote();
-                                                
+
                                                 titleController.clear();
                                                 contentController.clear();
-                                               
-                                                     Navigator.pop(context);
-                                               
+
+                                                Navigator.pop(context);
                                               }
                                             : null);
                                   }),
