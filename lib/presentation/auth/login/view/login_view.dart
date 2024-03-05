@@ -26,6 +26,7 @@ class _SignupViewState extends State<LoginView> {
   AppPreferences _appPreferences = instance<AppPreferences>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  GlobalKey formKey = GlobalKey<FormState>();
 
   late LoginCubit cubit;
 
@@ -75,83 +76,86 @@ class _SignupViewState extends State<LoginView> {
       body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const AuthScreenLogo(),
-                buildLable(AppStrings.email),
-                StreamBuilder<String?>(
-                    stream: viewModel.outputErrorEmail,
-                    builder: (context, snapshot) {
-                      return buildCustomTextField(
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        hint: AppStrings.email,
-                        prefix: Icons.email,
-                        borderColor: AppColor.grey.withOpacity(0.1),
-                        contentColor: AppColor.white,
-                        backgroundColor: AppColor.mediumPurple,
-                        errorText: snapshot.data,
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const AuthScreenLogo(),
+                  buildLable(AppStrings.email),
+                  StreamBuilder<String?>(
+                      stream: viewModel.outputErrorEmail,
+                      builder: (context, snapshot) {
+                        return buildCustomTextField(
+                          controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          hint: AppStrings.email,
+                          prefix: Icons.email,
+                          borderColor: AppColor.grey.withOpacity(0.1),
+                          contentColor: AppColor.white,
+                          backgroundColor: AppColor.mediumPurple,
+                          errorText: snapshot.data,
+                        );
+                      }),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  buildLable(AppStrings.password),
+                  StreamBuilder<String?>(
+                      stream: viewModel.outputErrorPassword,
+                      builder: (context, snapshot) {
+                        return BlocBuilder<LoginCubit, LoginStates>(
+                          builder: (context, state) {
+                            return buildCustomTextField(
+                              controller: _passwordController,
+                              keyboardType: TextInputType.visiblePassword,
+                              hint: AppStrings.password,
+                              prefix: Icons.lock,
+                              suffixIcon: cubit.isSecure
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              borderColor: AppColor.grey.withOpacity(0.1),
+                              contentColor: AppColor.white,
+                              backgroundColor: AppColor.mediumPurple,
+                              obscureText: cubit.isSecure,
+                              suffixPressed: () {
+                                cubit.changeVisibility();
+                              },
+                              errorText: snapshot.data,
+                            );
+                          },
+                        );
+                      }),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  StreamBuilder<bool>(
+                      stream: viewModel.outputAreAllInputsValid,
+                      builder: (context, snapshot) {
+                        return buildCustomButton(
+                            title: AppStrings.login,
+                            textColor: Colors.white,
+                            backgroundColor: AppColor.pink.withOpacity(0.9),
+                            onPressed: (snapshot.data ?? false)
+                                ? () {
+                                    viewModel.login();
+                                  }
+                                : null);
+                      }),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  AuthFooter(
+                    mainPhrase: AppStrings.dontHaveAccount,
+                    buttonTitle: AppStrings.signup,
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                        Routes.signupRoute,
                       );
-                    }),
-                const SizedBox(
-                  height: 20,
-                ),
-                buildLable(AppStrings.password),
-                StreamBuilder<String?>(
-                    stream: viewModel.outputErrorPassword,
-                    builder: (context, snapshot) {
-                      return BlocBuilder<LoginCubit, LoginStates>(
-                        builder: (context, state) {
-                          return buildCustomTextField(
-                            controller: _passwordController,
-                            keyboardType: TextInputType.visiblePassword,
-                            hint: AppStrings.password,
-                            prefix: Icons.lock,
-                            suffixIcon: cubit.isSecure
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            borderColor: AppColor.grey.withOpacity(0.1),
-                            contentColor: AppColor.white,
-                            backgroundColor: AppColor.mediumPurple,
-                            obscureText: cubit.isSecure,
-                            suffixPressed: () {
-                              cubit.changeVisibility();
-                            },
-                            errorText: snapshot.data,
-                          );
-                        },
-                      );
-                    }),
-                const SizedBox(
-                  height: 20,
-                ),
-                StreamBuilder<bool>(
-                    stream: viewModel.outputAreAllInputsValid,
-                    builder: (context, snapshot) {
-                      return buildCustomButton(
-                          title: AppStrings.login,
-                          textColor: Colors.white,
-                          backgroundColor: AppColor.pink.withOpacity(0.9),
-                          onPressed: (snapshot.data ?? false)
-                              ? () {
-                                  viewModel.login();
-                                }
-                              : null);
-                    }),
-                const SizedBox(
-                  height: 15,
-                ),
-                AuthFooter(
-                  mainPhrase: AppStrings.dontHaveAccount,
-                  buttonTitle: AppStrings.signup,
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(
-                      Routes.signupRoute,
-                    );
-                  },
-                ),
-              ],
+                    },
+                  ),
+                ],
+              ),
             ),
           )),
     );
