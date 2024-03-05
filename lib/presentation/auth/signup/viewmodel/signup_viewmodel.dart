@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:dartz/dartz.dart';
 
 
 import 'package:fullnoteapp/app/functions.dart';
@@ -8,8 +7,7 @@ import 'package:fullnoteapp/domain/usecase/signup_usecase.dart';
 import 'package:fullnoteapp/presentation/base/base_viewmodel.dart';
 import 'package:fullnoteapp/presentation/common/freezed_data_classes.dart';
 
-import '../../../../data/network/failure.dart';
-import '../../../../domain/models/models.dart';
+
 import '../../../resources/strings_manager.dart';
 
 class SignupViewModel extends BaseViewModel
@@ -22,6 +20,8 @@ class SignupViewModel extends BaseViewModel
       StreamController<String>.broadcast();
   final StreamController _allInputsStreamController =
       StreamController<void>.broadcast();
+  StreamController isUserLoggedInSuccessfullyStreamController =
+      StreamController<bool>();
   SignupObject signupObject = SignupObject('', '', '');
   final SignupUseCase _signupUseCase;
 
@@ -37,6 +37,7 @@ class SignupViewModel extends BaseViewModel
     _userNameController.close();
     _emailController.close();
     _passwordController.close();
+    isUserLoggedInSuccessfullyStreamController.close();
     super.dispose();
   }
   //inputs
@@ -86,10 +87,15 @@ class SignupViewModel extends BaseViewModel
   }
 
   @override
-  Future<Either<Failure, User>> signup() async {
-    return await _signupUseCase.execute(SignupUseCaseInput(
-            signupObject.userName, signupObject.email, signupObject.password));
-     
+   signup() async {
+    (await _signupUseCase.execute(SignupUseCaseInput(
+            signupObject.userName, signupObject.email, signupObject.password)))
+        .fold((failure) {
+      print(failure.message);
+    }, (user) {
+      isUserLoggedInSuccessfullyStreamController.add(true);
+      print(user.email);
+    });
   }
 
 //outputs
