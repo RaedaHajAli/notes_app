@@ -7,6 +7,8 @@ import 'package:fullnoteapp/presentation/base/base_viewmodel.dart';
 import 'package:fullnoteapp/presentation/common/freezed_data_classes.dart';
 
 
+import '../../../../app/app_prefs.dart';
+import '../../../../app/di.dart';
 import '../../../../domain/usecase/login_usecase.dart';
 import '../../../resources/strings_manager.dart';
 
@@ -22,6 +24,7 @@ class LoginViewModel extends BaseViewModel
       StreamController<bool>();
   LoginObject loginObject = LoginObject('', '');
   final LoginUseCase _loginUseCase;
+   final AppPreferences _appPreferences = instance<AppPreferences>();
 
   LoginViewModel(this._loginUseCase);
 
@@ -76,8 +79,10 @@ class LoginViewModel extends BaseViewModel
             LoginUseCaseInput(loginObject.email, loginObject.password)))
         .fold((failure) {
       print(failure.message);
-    }, (user) {
+    }, (user) async{
        isUserLoggedInSuccessfullyStreamController.add(true);
+         await _appPreferences.setUserLoggedIn();
+      _appPreferences.setUserData(user);
       print(user.email);
     });
   }

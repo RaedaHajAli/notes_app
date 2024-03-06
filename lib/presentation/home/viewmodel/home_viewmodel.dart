@@ -42,8 +42,8 @@ class HomeViewModel extends BaseViewModel
   int? userId;
 
   @override
-  void start() {
-    getNotes();
+  void start()async {
+  await  getNotes();
     super.start();
   }
 
@@ -72,6 +72,7 @@ class HomeViewModel extends BaseViewModel
       });
     } else {
       print(' No user id found');
+
     }
   }
 

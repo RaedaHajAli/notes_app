@@ -20,7 +20,7 @@ class AppPreferences {
     await _sharedPreferences.setBool(PREFS_KEY_IS_USER_LOGGED_IN, true);
   }
 
-  bool isUserLoggedIn() {
+ Future< bool> isUserLoggedIn()async {
     return _sharedPreferences.getBool(PREFS_KEY_IS_USER_LOGGED_IN) ?? false;
   }
 
