@@ -8,10 +8,12 @@ import 'package:fullnoteapp/data/repository/repository_impl.dart';
 import 'package:fullnoteapp/domain/repository/repository.dart';
 import 'package:fullnoteapp/domain/usecase/add_note_usecase.dart';
 import 'package:fullnoteapp/domain/usecase/delete_note_usecase.dart';
+import 'package:fullnoteapp/domain/usecase/edit_note_usecase.dart';
 import 'package:fullnoteapp/domain/usecase/view_note_usecase.dart';
 
 import 'package:fullnoteapp/presentation/auth/signup/viewmodel/signup_viewmodel.dart';
 import 'package:fullnoteapp/presentation/home/viewmodel/home_viewmodel.dart';
+import 'package:fullnoteapp/presentation/note_details/viewmodel/note_details_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,11 +67,21 @@ initHomeModule() {
         () => ViewNoteUseCase(instance<Repository>()));
     instance.registerFactory<DeleteNoteUseCase>(
         () => DeleteNoteUseCase(instance<Repository>()));
-    instance.registerFactory<AddNoteUseCase>(() => AddNoteUseCase(instance<Repository>()));
+    instance.registerFactory<AddNoteUseCase>(
+        () => AddNoteUseCase(instance<Repository>()));
     instance.registerFactory<HomeViewModel>(() => HomeViewModel(
         instance<ViewNoteUseCase>(),
         instance<DeleteNoteUseCase>(),
         instance<AddNoteUseCase>(),
         instance<AppPreferences>()));
+  }
+}
+
+initNoteDetailsModule() {
+  if (!GetIt.I.isRegistered<EditNoteUseCase>()) {
+    instance.registerFactory<EditNoteUseCase>(
+        () => EditNoteUseCase(instance<Repository>()));
+    instance.registerFactory(
+        () => NoteDetailsViewModel(instance<EditNoteUseCase>()));
   }
 }

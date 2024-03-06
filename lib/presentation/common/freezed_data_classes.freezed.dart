@@ -453,3 +453,156 @@ abstract class _AddNoteObject implements AddNoteObject {
   _$$AddNoteObjectImplCopyWith<_$AddNoteObjectImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$EditNoteObject {
+  String get title => throw _privateConstructorUsedError;
+  String get content => throw _privateConstructorUsedError;
+  String get imagePath => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $EditNoteObjectCopyWith<EditNoteObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EditNoteObjectCopyWith<$Res> {
+  factory $EditNoteObjectCopyWith(
+          EditNoteObject value, $Res Function(EditNoteObject) then) =
+      _$EditNoteObjectCopyWithImpl<$Res, EditNoteObject>;
+  @useResult
+  $Res call({String title, String content, String imagePath});
+}
+
+/// @nodoc
+class _$EditNoteObjectCopyWithImpl<$Res, $Val extends EditNoteObject>
+    implements $EditNoteObjectCopyWith<$Res> {
+  _$EditNoteObjectCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = null,
+    Object? content = null,
+    Object? imagePath = null,
+  }) {
+    return _then(_value.copyWith(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      imagePath: null == imagePath
+          ? _value.imagePath
+          : imagePath // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$EditNoteObjectImplCopyWith<$Res>
+    implements $EditNoteObjectCopyWith<$Res> {
+  factory _$$EditNoteObjectImplCopyWith(_$EditNoteObjectImpl value,
+          $Res Function(_$EditNoteObjectImpl) then) =
+      __$$EditNoteObjectImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String title, String content, String imagePath});
+}
+
+/// @nodoc
+class __$$EditNoteObjectImplCopyWithImpl<$Res>
+    extends _$EditNoteObjectCopyWithImpl<$Res, _$EditNoteObjectImpl>
+    implements _$$EditNoteObjectImplCopyWith<$Res> {
+  __$$EditNoteObjectImplCopyWithImpl(
+      _$EditNoteObjectImpl _value, $Res Function(_$EditNoteObjectImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = null,
+    Object? content = null,
+    Object? imagePath = null,
+  }) {
+    return _then(_$EditNoteObjectImpl(
+      null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == imagePath
+          ? _value.imagePath
+          : imagePath // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EditNoteObjectImpl implements _EditNoteObject {
+  _$EditNoteObjectImpl(this.title, this.content, this.imagePath);
+
+  @override
+  final String title;
+  @override
+  final String content;
+  @override
+  final String imagePath;
+
+  @override
+  String toString() {
+    return 'EditNoteObject(title: $title, content: $content, imagePath: $imagePath)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EditNoteObjectImpl &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.content, content) || other.content == content) &&
+            (identical(other.imagePath, imagePath) ||
+                other.imagePath == imagePath));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, title, content, imagePath);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EditNoteObjectImplCopyWith<_$EditNoteObjectImpl> get copyWith =>
+      __$$EditNoteObjectImplCopyWithImpl<_$EditNoteObjectImpl>(
+          this, _$identity);
+}
+
+abstract class _EditNoteObject implements EditNoteObject {
+  factory _EditNoteObject(
+          final String title, final String content, final String imagePath) =
+      _$EditNoteObjectImpl;
+
+  @override
+  String get title;
+  @override
+  String get content;
+  @override
+  String get imagePath;
+  @override
+  @JsonKey(ignore: true)
+  _$$EditNoteObjectImplCopyWith<_$EditNoteObjectImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

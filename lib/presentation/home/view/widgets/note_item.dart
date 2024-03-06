@@ -1,6 +1,4 @@
-import 'dart:convert';
 
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
@@ -77,10 +75,7 @@ class NoteItem extends StatelessWidget {
   }
 }
 
-convertStringToUint8List(String imageString) {
-  Uint8List bytesImage = Base64Decoder().convert(imageString);
-  return bytesImage;
-}
+
 
 
 

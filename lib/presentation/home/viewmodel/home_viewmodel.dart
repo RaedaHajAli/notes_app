@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
-import 'dart:convert';
+
 import 'dart:io';
 
 import 'package:fullnoteapp/app/app_prefs.dart';
@@ -11,6 +11,7 @@ import 'package:fullnoteapp/presentation/base/base_viewmodel.dart';
 import 'package:fullnoteapp/presentation/common/freezed_data_classes.dart';
 import 'package:fullnoteapp/presentation/resources/strings_manager.dart';
 
+import '../../../app/functions.dart';
 import '../../../domain/models/models.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -92,7 +93,7 @@ class HomeViewModel extends BaseViewModel
     (await _addNoteUseCase.execute(AddNoteUseCaseInput(
             title: addNoteObject.title,
             content: addNoteObject.content,
-            image: _convertImage(File(addNoteObject.imagePath)) ?? 'image',
+            image: convertImageFileToString(File(addNoteObject.imagePath)) ?? 'image',
             userId: userId!)))
         .fold((failure) {
       print(failure.message);
@@ -113,11 +114,14 @@ class HomeViewModel extends BaseViewModel
 
   @override
   Sink get inputTitle => _titleStreamController.sink;
+   @override
+  Sink get inputNoteImage => _imageStreamController.sink;
+
 
   @override
   setContent(String content) {
     inputContent.add(content);
-    if (_isFieldValid(content)) {
+    if (isFieldValid(content)) {
       addNoteObject = addNoteObject.copyWith(content: content);
     } else {
       addNoteObject = addNoteObject.copyWith(content: '');
@@ -128,7 +132,7 @@ class HomeViewModel extends BaseViewModel
   @override
   setTitle(String title) {
     inputTitle.add(title);
-    if (_isFieldValid(title)) {
+    if (isFieldValid(title)) {
       addNoteObject = addNoteObject.copyWith(title: title);
     } else {
       addNoteObject = addNoteObject.copyWith(title: '');
@@ -147,9 +151,7 @@ class HomeViewModel extends BaseViewModel
     _validate();
   }
 
-  @override
-  Sink get inputNoteImage => _imageStreamController.sink;
-
+ 
 //outputs
   @override
   Stream<HomeViewObject> get outputHomeViewObject =>
@@ -157,14 +159,14 @@ class HomeViewModel extends BaseViewModel
           .map((homeViewObject) => homeViewObject);
   @override
   Stream<bool> get outputIsTitleValid =>
-      _titleStreamController.stream.map((title) => _isFieldValid(title));
+      _titleStreamController.stream.map((title) => isFieldValid(title));
   @override
   Stream<String?> get outputErrorTitle => outputIsTitleValid
       .map((isTitleValid) => isTitleValid ? null : AppStrings.fieldError);
 
   @override
   Stream<bool> get outputIsContentValid =>
-      _contentStreamController.stream.map((content) => _isFieldValid(content));
+      _contentStreamController.stream.map((content) => isFieldValid(content));
   @override
   Stream<String?> get outputErrorContent => outputIsContentValid
       .map((isContentValid) => isContentValid ? null : AppStrings.fieldError);
@@ -177,9 +179,7 @@ class HomeViewModel extends BaseViewModel
   Stream<File> get outputNoteImage =>
       _imageStreamController.stream.map((noteImage) => noteImage);
   //private functions
-  bool _isFieldValid(String text) {
-    return text.length >= 5;
-  }
+ 
 
   bool _areAllInputsValid() {
     return addNoteObject.content.isNotEmpty &&
@@ -198,11 +198,6 @@ class HomeViewModel extends BaseViewModel
     }
   }
 
-  _convertImage(File image) {
-    List<int> imageBytes = image.readAsBytesSync();
-    String base64Image = base64Encode(imageBytes);
-    return base64Image;
-  }
 
   _clearFields() {
   addNoteObject = addNoteObject.copyWith(title: '', content:'',imagePath: '');

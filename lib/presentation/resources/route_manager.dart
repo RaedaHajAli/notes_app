@@ -50,6 +50,7 @@ class RouteGenerator {
           builder: (_) => const HomeView(),
         );
       case Routes.noteDetailsRoute:
+        initNoteDetailsModule();
         final note = settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
             builder: (_) => NoteDetailsView(

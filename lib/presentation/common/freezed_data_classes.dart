@@ -1,3 +1,4 @@
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'freezed_data_classes.freezed.dart';
 
@@ -19,4 +20,9 @@ class SignupObject with _$SignupObject {
 class AddNoteObject with _$AddNoteObject {
   factory AddNoteObject(String title, String content, String imagePath) =
       _AddNoteObject;
+}
+@freezed
+class EditNoteObject with _$EditNoteObject {
+  factory EditNoteObject(String title, String content, String imagePath) =
+      _EditNoteObject;
 }

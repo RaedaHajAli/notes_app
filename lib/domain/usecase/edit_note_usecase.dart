@@ -8,26 +8,29 @@ import 'package:fullnoteapp/domain/usecase/base_usecase.dart';
 
 import '../repository/repository.dart';
 
-class EditNoteUseCase implements BaseUseCase<EditNoteUseCaseInput, OperationStatus> {
+class EditNoteUseCase
+    implements BaseUseCase<EditNoteUseCaseInput, OperationStatus> {
   final Repository _repository;
   EditNoteUseCase(
     this._repository,
   );
   @override
-  Future<Either<Failure, OperationStatus>> execute(EditNoteUseCaseInput input) async {
-    return await _repository.edit(EditNoteRequest(noteId:input.noteId, title: input.title, content: input.content));
+  Future<Either<Failure, OperationStatus>> execute(
+      EditNoteUseCaseInput input) async {
+    return await _repository.edit(EditNoteRequest(
+        noteId: input.noteId, title: input.title, content: input.content));
   }
 }
+
 class EditNoteUseCaseInput {
   int noteId;
-String title;
+  String title;
   String content;
+  // String image;
   EditNoteUseCaseInput({
     required this.noteId,
     required this.title,
     required this.content,
+    // required this.image
   });
- 
-  
-
 }

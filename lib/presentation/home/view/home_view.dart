@@ -31,6 +31,7 @@ class _HomeViewState extends State<HomeView> {
 
   _bind() {
     _viewModel.start();
+    
   }
 
   @override
