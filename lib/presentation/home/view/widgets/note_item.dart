@@ -85,20 +85,4 @@ convertStringToUint8List(String imageString) {
 
 
 
-AppBar buildHomeAppBar(BuildContext context) {
-  final AppPreferences appPreferences = instance<AppPreferences>();
-  return AppBar(
-    backgroundColor: AppColor.deepPurple,
-    title: const Text('Notes'),
-    centerTitle: true,
-    elevation: 0,
-    actions: [
-      IconButton(
-          onPressed: () {
-            appPreferences.logout();
-            Navigator.pushReplacementNamed(context, Routes.loginRoute);
-          },
-          icon: const Icon(Icons.power_settings_new_outlined))
-    ],
-  );
-}
+
