@@ -6,13 +6,12 @@ import 'package:flutter/material.dart';
 
 
 
-import '../../../../app/app_prefs.dart';
-import '../../../../app/di.dart';
+
 import '../../../../domain/models/models.dart';
 
 import '../../../resources/color_manager.dart';
 import '../../../resources/images_manager.dart';
-import '../../../resources/route_manager.dart';
+
 
 
 

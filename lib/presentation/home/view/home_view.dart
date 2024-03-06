@@ -75,7 +75,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
 
-
+//Home
   buildHomeBody() {
     return StreamBuilder<HomeViewObject>(
         stream: _viewModel.outputHomeViewObject,
