@@ -8,6 +8,7 @@ import '../../../../app/app_prefs.dart';
 import '../../../../app/di.dart';
 import '../../../../domain/models/models.dart';
 
+import '../../../common/state_renderer/state_renderer_impl.dart';
 import '../../../resources/route_manager.dart';
 
 import '../viewmodel/home_viewmodel.dart';
@@ -53,7 +54,15 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       backgroundColor: AppColor.deepPurple,
       appBar: buildHomeAppBar(context),
-      body: buildHomeBody(),
+      body: StreamBuilder<FlowState>(
+            stream: _viewModel.outputState,
+            builder: (context, snapshot) {
+              return snapshot.data
+                      ?.getScreenWidget(context, _getContentWidget(), () {
+                    _viewModel.start();
+                  }) ??
+                  _getContentWidget();
+            }),
       floatingActionButton: Fab(viewModel:_viewModel),
     );
   }
@@ -77,7 +86,7 @@ class _HomeViewState extends State<HomeView> {
 
 
 //Home
-  buildHomeBody() {
+   Widget _getContentWidget(){
     return StreamBuilder<HomeViewObject>(
         stream: _viewModel.outputHomeViewObject,
         builder: (context, snapshot) {

@@ -15,6 +15,9 @@ import '../../../../app/functions.dart';
 import '../../../../domain/models/models.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../../common/state_renderer/state_renderer.dart';
+import '../../../common/state_renderer/state_renderer_impl.dart';
+
 class HomeViewModel extends BaseViewModel
     with HomeViewModelInputs, HomeViewModelOutputs {
   final ViewNoteUseCase _viewNoteUseCase;
@@ -43,9 +46,8 @@ class HomeViewModel extends BaseViewModel
   int? userId;
 
   @override
-  void start()async {
-  await  getNotes();
-   
+  void start()  {
+    getNotes();
   }
 
   @override
@@ -65,15 +67,25 @@ class HomeViewModel extends BaseViewModel
     _getUserId();
 
     if (userId != null) {
-      (await _viewNoteUseCase.execute(ViewNoteUseCaseInput(userId: userId!)))
+      inputState.add(LoadingState(
+        stateRendererType: StateRendererType.fullScreenLoadingState,
+      ));
+      // Make getting data like real server
+      Future.delayed(const Duration(seconds: 5),()async{
+        (await _viewNoteUseCase.execute(ViewNoteUseCaseInput(userId: userId!)))
           .fold((failure) {
-        print(failure.message);
+            inputState.add(
+          ErrorState(StateRendererType.fullScreenErrorState, failure.message));
+        
       }, (data) {
+        inputState.add(ContentState());
         inputHomeViewObject.add(HomeViewObject(notes: data.notes));
       });
+
+      });
+      
     } else {
       print(' No user id found');
-
     }
   }
 
@@ -93,7 +105,8 @@ class HomeViewModel extends BaseViewModel
     (await _addNoteUseCase.execute(AddNoteUseCaseInput(
             title: addNoteObject.title,
             content: addNoteObject.content,
-            image: convertImageFileToString(File(addNoteObject.imagePath)) ?? 'image',
+            image: convertImageFileToString(File(addNoteObject.imagePath)) ??
+                'image',
             userId: userId!)))
         .fold((failure) {
       print(failure.message);
@@ -114,9 +127,8 @@ class HomeViewModel extends BaseViewModel
 
   @override
   Sink get inputTitle => _titleStreamController.sink;
-   @override
+  @override
   Sink get inputNoteImage => _imageStreamController.sink;
-
 
   @override
   setContent(String content) {
@@ -151,7 +163,6 @@ class HomeViewModel extends BaseViewModel
     _validate();
   }
 
- 
 //outputs
   @override
   Stream<HomeViewObject> get outputHomeViewObject =>
@@ -179,7 +190,6 @@ class HomeViewModel extends BaseViewModel
   Stream<File> get outputNoteImage =>
       _imageStreamController.stream.map((noteImage) => noteImage);
   //private functions
- 
 
   bool _areAllInputsValid() {
     return addNoteObject.content.isNotEmpty &&
@@ -198,9 +208,9 @@ class HomeViewModel extends BaseViewModel
     }
   }
 
-
   _clearFields() {
-  addNoteObject = addNoteObject.copyWith(title: '', content:'',imagePath: '');
+    addNoteObject =
+        addNoteObject.copyWith(title: '', content: '', imagePath: '');
   }
 }
 
