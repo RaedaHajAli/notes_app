@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:fullnoteapp/presentation/note_details/viewmodel/note_details_viewmodel.dart';
+import 'package:fullnoteapp/presentation/notes/note_details/viewmodel/note_details_viewmodel.dart';
 
 import 'package:fullnoteapp/presentation/resources/color_manager.dart';
 import 'package:fullnoteapp/presentation/resources/images_manager.dart';
+import 'package:fullnoteapp/presentation/resources/route_manager.dart';
 
-import '../../../app/di.dart';
-import '../../common/widgets/widgets.dart';
+import '../../../../app/di.dart';
+import '../../../common/widgets/widgets.dart';
 
 class NoteDetailsView extends StatefulWidget {
   const NoteDetailsView({
@@ -29,10 +30,10 @@ class _NoteDetailsViewState extends State<NoteDetailsView> {
   _bind() {
     _viewModel.start();
     titleController.addListener(() {
-      _viewModel.setTitle(titleController.text,widget.note?['title']);
+      _viewModel.setTitle(titleController.text, widget.note?['title']);
     });
     contentController.addListener(() {
-      _viewModel.setContent(contentController.text,widget.note?['content']);
+      _viewModel.setContent(contentController.text, widget.note?['content']);
     });
   }
 
@@ -142,8 +143,13 @@ class _NoteDetailsViewState extends State<NoteDetailsView> {
                                           onPressed: (snapshot.data ?? false)
                                               ? () {
                                                   print('save');
-                                                  _viewModel.editNote(
-                                                      widget.note?['id']);
+                                                  _viewModel
+                                                      .editNote(
+                                                          widget.note?['id'])
+                                                      .then((_) {
+                                                    Navigator.pushNamedAndRemoveUntil(context, Routes.homeRoute, (route) => false);
+                                                    
+                                                  });
                                                 }
                                               : null);
                                     }),

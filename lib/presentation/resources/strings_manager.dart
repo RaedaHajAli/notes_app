@@ -20,9 +20,11 @@ class AppStrings {
   static const String letsStart = ' Let\'s start now';
   static const String failureSignup = 'Failure Signup';
   static const String failureLogin = 'Failure Login';
-  static const String tryAgain = 'Try again later';
-   static const String photoGallery = 'Open Gallery';
-    static const String photoCamera = 'Open Camera';
+  static const String tryAgain = 'Try again';
+  static const String ok= 'Ok';
+  static const String loading= 'Loading';
+  static const String photoGallery = 'Open Gallery';
+  static const String photoCamera = 'Open Camera';
 
   //error strings
   static const String unauthorizedError = 'User unauthorized';

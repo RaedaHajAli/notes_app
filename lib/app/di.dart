@@ -12,8 +12,8 @@ import 'package:fullnoteapp/domain/usecase/edit_note_usecase.dart';
 import 'package:fullnoteapp/domain/usecase/view_note_usecase.dart';
 
 import 'package:fullnoteapp/presentation/auth/signup/viewmodel/signup_viewmodel.dart';
-import 'package:fullnoteapp/presentation/home/viewmodel/home_viewmodel.dart';
-import 'package:fullnoteapp/presentation/note_details/viewmodel/note_details_viewmodel.dart';
+import 'package:fullnoteapp/presentation/notes/home/viewmodel/home_viewmodel.dart';
+import 'package:fullnoteapp/presentation/notes/note_details/viewmodel/note_details_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
+
 import 'package:fullnoteapp/domain/usecase/edit_note_usecase.dart';
 import 'package:fullnoteapp/presentation/base/base_viewmodel.dart';
 import 'package:fullnoteapp/presentation/common/freezed_data_classes.dart';
 
-import '../../../app/functions.dart';
-import '../../resources/strings_manager.dart';
+import '../../../../app/functions.dart';
+import '../../../resources/strings_manager.dart';
 
 class NoteDetailsViewModel extends BaseViewModel
     with NoteDetailsViewModelInputs, NoteDetailsViewModelOutputs {
@@ -26,7 +27,7 @@ class NoteDetailsViewModel extends BaseViewModel
 
   @override
   void start() {
-    super.start();
+   
   }
 
   @override
@@ -41,7 +42,7 @@ class NoteDetailsViewModel extends BaseViewModel
 
   //inputs
   @override
-  editNote(int noteId) async {
+ Future<void> editNote(int noteId) async {
     (await _editNoteUseCase.execute(EditNoteUseCaseInput(
       noteId: noteId,
       title: editNoteObject.title,
@@ -53,6 +54,7 @@ class NoteDetailsViewModel extends BaseViewModel
       print(failure.message);
     }, (operationStatus) {
       print(operationStatus.message);
+      
     });
   }
 

@@ -9,10 +9,10 @@ import 'package:fullnoteapp/presentation/auth/signup/view/cubit/signup_cubit.dar
 
 import 'package:fullnoteapp/presentation/auth/signup/view/signup_view.dart';
 
-import 'package:fullnoteapp/presentation/note_details/view/note_details_view.dart';
+import 'package:fullnoteapp/presentation/notes/note_details/view/note_details_view.dart';
 import 'package:fullnoteapp/presentation/splash/splash_view.dart';
 
-import '../home/view/home_view.dart';
+import '../notes/home/view/home_view.dart';
 
 import '../../presentation/resources/strings_manager.dart';
 

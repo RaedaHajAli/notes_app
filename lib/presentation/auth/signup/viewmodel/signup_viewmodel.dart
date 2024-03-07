@@ -1,15 +1,15 @@
 import 'dart:async';
 
-
 import 'package:fullnoteapp/app/functions.dart';
 
 import 'package:fullnoteapp/domain/usecase/signup_usecase.dart';
 import 'package:fullnoteapp/presentation/base/base_viewmodel.dart';
 import 'package:fullnoteapp/presentation/common/freezed_data_classes.dart';
 
-
 import '../../../../app/app_prefs.dart';
 import '../../../../app/di.dart';
+import '../../../common/state_renderer/state_renderer.dart';
+import '../../../common/state_renderer/state_renderer_impl.dart';
 import '../../../resources/strings_manager.dart';
 
 class SignupViewModel extends BaseViewModel
@@ -24,7 +24,7 @@ class SignupViewModel extends BaseViewModel
       StreamController<void>.broadcast();
   StreamController isUserLoggedInSuccessfullyStreamController =
       StreamController<bool>();
-      final AppPreferences _appPreferences = instance<AppPreferences>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
   SignupObject signupObject = SignupObject('', '', '');
   final SignupUseCase _signupUseCase;
 
@@ -32,7 +32,7 @@ class SignupViewModel extends BaseViewModel
 
   @override
   void start() {
-    super.start();
+    inputState.add(ContentState());
   }
 
   @override
@@ -90,17 +90,25 @@ class SignupViewModel extends BaseViewModel
   }
 
   @override
-   signup() async {
-    (await _signupUseCase.execute(SignupUseCaseInput(
-            signupObject.userName, signupObject.email, signupObject.password)))
-        .fold((failure) {
-      print(failure.message);
-    }, (user) async{
-      isUserLoggedInSuccessfullyStreamController.add(true);
-      isUserLoggedInSuccessfullyStreamController.add(true);
-         await _appPreferences.setUserLoggedIn();
-      _appPreferences.setUserData(user);
-      print(user.email);
+  signup() async {
+    inputState.add(LoadingState(
+      stateRendererType: StateRendererType.popupLoadingState,
+    ));
+    Future.delayed(Duration(seconds: 5), () async {
+      // add delay to make the app like getting data from real server
+      //******
+      (await _signupUseCase.execute(SignupUseCaseInput(signupObject.userName,
+              signupObject.email, signupObject.password)))
+          .fold((failure) {
+        
+        inputState.add(
+            ErrorState(StateRendererType.popupErrorState, failure.message));
+      }, (user) async {
+        inputState.add(ContentState());
+        isUserLoggedInSuccessfullyStreamController.add(true);
+
+        _appPreferences.setUserData(user);
+      });
     });
   }
 

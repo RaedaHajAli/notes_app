@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../common/widgets/widgets.dart';
+import '../../../../common/widgets/widgets.dart';
 
-import '../../../resources/color_manager.dart';
-import '../../../resources/images_manager.dart';
+import '../../../../resources/color_manager.dart';
+import '../../../../resources/images_manager.dart';
 import '../../viewmodel/home_viewmodel.dart';
 
 class Fab extends StatefulWidget {

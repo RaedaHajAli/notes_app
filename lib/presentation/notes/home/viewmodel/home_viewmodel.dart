@@ -11,8 +11,8 @@ import 'package:fullnoteapp/presentation/base/base_viewmodel.dart';
 import 'package:fullnoteapp/presentation/common/freezed_data_classes.dart';
 import 'package:fullnoteapp/presentation/resources/strings_manager.dart';
 
-import '../../../app/functions.dart';
-import '../../../domain/models/models.dart';
+import '../../../../app/functions.dart';
+import '../../../../domain/models/models.dart';
 import 'package:rxdart/rxdart.dart';
 
 class HomeViewModel extends BaseViewModel
@@ -45,7 +45,7 @@ class HomeViewModel extends BaseViewModel
   @override
   void start()async {
   await  getNotes();
-    super.start();
+   
   }
 
   @override

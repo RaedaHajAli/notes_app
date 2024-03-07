@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 import 'package:fullnoteapp/presentation/resources/color_manager.dart';
 
-import '../../../app/app_prefs.dart';
-import '../../../app/di.dart';
-import '../../../domain/models/models.dart';
+import '../../../../app/app_prefs.dart';
+import '../../../../app/di.dart';
+import '../../../../domain/models/models.dart';
 
-import '../../resources/route_manager.dart';
+import '../../../resources/route_manager.dart';
 
 import '../viewmodel/home_viewmodel.dart';
 import 'widgets/fab.dart';

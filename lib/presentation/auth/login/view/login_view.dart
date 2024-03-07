@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,6 +10,7 @@ import 'package:fullnoteapp/presentation/resources/route_manager.dart';
 
 import '../../../../app/app_prefs.dart';
 import '../../../../app/di.dart';
+import '../../../common/state_renderer/state_renderer_impl.dart';
 import '../../../common/widgets/widgets.dart';
 import '../../../resources/strings_manager.dart';
 import '../../widgets.dart';
@@ -41,13 +43,15 @@ class _SignupViewState extends State<LoginView> {
     viewModel.isUserLoggedInSuccessfullyStreamController.stream
         .listen((isLoggedIn) {
       if (isLoggedIn) {
-        //Navigate to home screen
+       
+
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+           // Navigate to home screen
         _appPreferences.setUserLoggedIn();
+        
         Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
 
-        // SchedulerBinding.instance.addPostFrameCallback((_) {
-
-        // });
+        });
       }
     });
   }
@@ -73,7 +77,20 @@ class _SignupViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.deepPurple,
-      body: Padding(
+      body: StreamBuilder<FlowState>(
+          stream: viewModel.outputState,
+          builder: (context, snapshot) {
+            return snapshot.data
+                    ?.getScreenWidget(context, _getContentWidget(), () {}) ??
+                _getContentWidget();
+          }),
+      
+     
+    );
+  }
+  Widget _getContentWidget(){
+    return 
+     Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: SingleChildScrollView(
             child: Form(
@@ -157,7 +174,7 @@ class _SignupViewState extends State<LoginView> {
                 ],
               ),
             ),
-          )),
-    );
+          ))
+    ;
   }
 }

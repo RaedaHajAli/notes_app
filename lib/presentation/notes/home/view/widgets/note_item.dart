@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 
 
-import '../../../../domain/models/models.dart';
+import '../../../../../domain/models/models.dart';
 
-import '../../../resources/color_manager.dart';
-import '../../../resources/images_manager.dart';
+import '../../../../resources/color_manager.dart';
+import '../../../../resources/images_manager.dart';
 
 
 

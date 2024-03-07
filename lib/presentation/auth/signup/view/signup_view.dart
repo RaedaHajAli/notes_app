@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fullnoteapp/presentation/auth/signup/viewmodel/signup_viewmodel.dart';
 
@@ -9,6 +10,7 @@ import 'package:fullnoteapp/presentation/auth/signup/view/cubit/signup_state.dar
 
 import '../../../../app/app_prefs.dart';
 import '../../../../app/di.dart';
+import '../../../common/state_renderer/state_renderer_impl.dart';
 import '../../../common/widgets/widgets.dart';
 import '../../../resources/route_manager.dart';
 import '../../../resources/strings_manager.dart';
@@ -47,12 +49,11 @@ class _SignupViewState extends State<SignupView> {
         .listen((isLoggedIn) {
       if (isLoggedIn) {
         //Navigate to home screen
-        _appPreferences.setUserLoggedIn();
-        Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
 
-        // SchedulerBinding.instance.addPostFrameCallback((_) {
-
-        // });
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          _appPreferences.setUserLoggedIn();
+          Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
+        });
       }
     });
   }
@@ -78,7 +79,19 @@ class _SignupViewState extends State<SignupView> {
     return BlocBuilder<SignupCubit, SignupStates>(builder: (context, state) {
       return Scaffold(
         backgroundColor: AppColor.deepPurple,
-        body: Form(
+        body: StreamBuilder<FlowState>(
+          stream: _viewModel.outputState,
+          builder: (context, snapshot) {
+            return snapshot.data
+                    ?.getScreenWidget(context, _getContentWidget(), () {}) ??
+                _getContentWidget();
+          }),
+      );
+    });
+  }
+
+  Widget _getContentWidget() {
+    return Form(
           key: formKey,
           child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -178,8 +191,7 @@ class _SignupViewState extends State<SignupView> {
                   ],
                 ),
               )),
-        ),
-      );
-    });
+        )
+    ;
   }
 }

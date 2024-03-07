@@ -1,15 +1,15 @@
 import 'dart:async';
 
-
 import 'package:fullnoteapp/app/functions.dart';
 
 import 'package:fullnoteapp/presentation/base/base_viewmodel.dart';
 import 'package:fullnoteapp/presentation/common/freezed_data_classes.dart';
 
-
 import '../../../../app/app_prefs.dart';
 import '../../../../app/di.dart';
 import '../../../../domain/usecase/login_usecase.dart';
+import '../../../common/state_renderer/state_renderer.dart';
+import '../../../common/state_renderer/state_renderer_impl.dart';
 import '../../../resources/strings_manager.dart';
 
 class LoginViewModel extends BaseViewModel
@@ -24,13 +24,14 @@ class LoginViewModel extends BaseViewModel
       StreamController<bool>();
   LoginObject loginObject = LoginObject('', '');
   final LoginUseCase _loginUseCase;
-   final AppPreferences _appPreferences = instance<AppPreferences>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
 
   LoginViewModel(this._loginUseCase);
 
   @override
   void start() {
-    super.start();
+    //view moudle should tell view please show content state
+    inputState.add(ContentState());
   }
 
   @override
@@ -75,15 +76,28 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() async {
-    (await _loginUseCase.execute(
-            LoginUseCaseInput(loginObject.email, loginObject.password)))
-        .fold((failure) {
-      print(failure.message);
-    }, (user) async{
-       isUserLoggedInSuccessfullyStreamController.add(true);
-         await _appPreferences.setUserLoggedIn();
-      _appPreferences.setUserData(user);
-      print(user.email);
+    inputState.add(LoadingState(
+      stateRendererType: StateRendererType.popupLoadingState,
+    ));
+    // add delay to make the app like getting data from real server
+    //******
+    Future.delayed(Duration(seconds: 5), () async {
+   
+      (await _loginUseCase.execute(
+              LoginUseCaseInput(loginObject.email, loginObject.password)))
+          .fold((failure) {
+              inputState.add(
+            ErrorState(StateRendererType.popupErrorState, failure.message));
+           
+      
+       
+      }, (user) async {
+        inputState.add(ContentState());
+        isUserLoggedInSuccessfullyStreamController.add(true);
+
+        _appPreferences.setUserData(user);
+      });
+    
     });
   }
 
