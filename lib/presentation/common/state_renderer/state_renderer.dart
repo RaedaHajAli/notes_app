@@ -97,7 +97,7 @@ class StateRenderer extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Text(
           message,
-          style:const TextStyle(color: AppColor.white,fontSize: 18,)
+          style:const TextStyle(color: AppColor.deepPurple,fontSize: 18,)
          
         ),
       ),

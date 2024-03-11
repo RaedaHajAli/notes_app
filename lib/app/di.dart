@@ -12,8 +12,7 @@ import 'package:fullnoteapp/domain/usecase/edit_note_usecase.dart';
 import 'package:fullnoteapp/domain/usecase/view_note_usecase.dart';
 
 import 'package:fullnoteapp/presentation/auth/signup/viewmodel/signup_viewmodel.dart';
-import 'package:fullnoteapp/presentation/notes/home/viewmodel/home_viewmodel.dart';
-import 'package:fullnoteapp/presentation/notes/note_details/viewmodel/note_details_viewmodel.dart';
+
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,23 +64,12 @@ initHomeModule() {
   if (!GetIt.I.isRegistered<ViewNoteUseCase>()) {
     instance.registerFactory<ViewNoteUseCase>(
         () => ViewNoteUseCase(instance<Repository>()));
-    instance.registerFactory<DeleteNoteUseCase>(
-        () => DeleteNoteUseCase(instance<Repository>()));
     instance.registerFactory<AddNoteUseCase>(
         () => AddNoteUseCase(instance<Repository>()));
-    instance.registerFactory<HomeViewModel>(() => HomeViewModel(
-        instance<ViewNoteUseCase>(),
-        instance<DeleteNoteUseCase>(),
-        instance<AddNoteUseCase>(),
-        instance<AppPreferences>()));
-  }
-}
+    instance.registerFactory<DeleteNoteUseCase>(
+        () => DeleteNoteUseCase(instance<Repository>()));
 
-initNoteDetailsModule() {
-  if (!GetIt.I.isRegistered<EditNoteUseCase>()) {
     instance.registerFactory<EditNoteUseCase>(
         () => EditNoteUseCase(instance<Repository>()));
-    instance.registerFactory(
-        () => NoteDetailsViewModel(instance<EditNoteUseCase>()));
   }
 }

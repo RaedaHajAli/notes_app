@@ -71,6 +71,7 @@ class EmptyState extends FlowState {
 class SuccessState extends FlowState {
 
   String message;
+  
   SuccessState(
  
     this.message,

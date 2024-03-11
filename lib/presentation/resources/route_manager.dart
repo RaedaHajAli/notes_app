@@ -9,10 +9,11 @@ import 'package:fullnoteapp/presentation/auth/signup/view/cubit/signup_cubit.dar
 
 import 'package:fullnoteapp/presentation/auth/signup/view/signup_view.dart';
 
-import 'package:fullnoteapp/presentation/notes/note_details/view/note_details_view.dart';
+import 'package:fullnoteapp/presentation/notes/note_details/note_details_view.dart';
 import 'package:fullnoteapp/presentation/splash/splash_view.dart';
 
-import '../notes/home/view/home_view.dart';
+import '../notes/home/home_view.dart';
+
 
 import '../../presentation/resources/strings_manager.dart';
 
@@ -50,7 +51,7 @@ class RouteGenerator {
           builder: (_) => const HomeView(),
         );
       case Routes.noteDetailsRoute:
-        initNoteDetailsModule();
+     
         final note = settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
             builder: (_) => NoteDetailsView(

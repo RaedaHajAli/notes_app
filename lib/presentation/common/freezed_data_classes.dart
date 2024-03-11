@@ -23,6 +23,6 @@ class AddNoteObject with _$AddNoteObject {
 }
 @freezed
 class EditNoteObject with _$EditNoteObject {
-  factory EditNoteObject(String title, String content, String imagePath) =
+  factory EditNoteObject(int id, String title, String content, String imagePath) =
       _EditNoteObject;
 }

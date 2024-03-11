@@ -1,9 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import '../../resources/color_manager.dart';
-
-
-
 
 Widget buildCustomButton(
     {required String title,
@@ -31,19 +29,24 @@ Widget buildCustomButton(
     ),
   );
 }
+
 class NoteTextFormField extends StatelessWidget {
   const NoteTextFormField({
-    super.key,
+    Key? key,
     required this.titleController,
     this.maxLines,
-    this.hint, this.errorText, this.onChanged,
-  });
+    this.hint,
+    this.errorText,
+    this.onChanged,
+    this.validator,
+  }) : super(key: key);
 
   final TextEditingController titleController;
   final int? maxLines;
   final String? hint;
   final String? errorText;
   final void Function(String)? onChanged;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +56,17 @@ class NoteTextFormField extends StatelessWidget {
       cursorColor: AppColor.grey,
       maxLines: maxLines,
       onChanged: onChanged,
-      
+      validator: validator ??
+          (value) {
+            if (value?.isEmpty ?? true) {
+              return 'Field is required';
+            } else {
+              return null;
+            }
+          },
       decoration: InputDecoration(
         hintText: hint,
-        errorText:errorText ,
+        errorText: errorText,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -75,8 +85,3 @@ class NoteTextFormField extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

@@ -456,6 +456,7 @@ abstract class _AddNoteObject implements AddNoteObject {
 
 /// @nodoc
 mixin _$EditNoteObject {
+  int get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   String get imagePath => throw _privateConstructorUsedError;
@@ -471,7 +472,7 @@ abstract class $EditNoteObjectCopyWith<$Res> {
           EditNoteObject value, $Res Function(EditNoteObject) then) =
       _$EditNoteObjectCopyWithImpl<$Res, EditNoteObject>;
   @useResult
-  $Res call({String title, String content, String imagePath});
+  $Res call({int id, String title, String content, String imagePath});
 }
 
 /// @nodoc
@@ -487,11 +488,16 @@ class _$EditNoteObjectCopyWithImpl<$Res, $Val extends EditNoteObject>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? title = null,
     Object? content = null,
     Object? imagePath = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -516,7 +522,7 @@ abstract class _$$EditNoteObjectImplCopyWith<$Res>
       __$$EditNoteObjectImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, String content, String imagePath});
+  $Res call({int id, String title, String content, String imagePath});
 }
 
 /// @nodoc
@@ -530,11 +536,16 @@ class __$$EditNoteObjectImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? title = null,
     Object? content = null,
     Object? imagePath = null,
   }) {
     return _then(_$EditNoteObjectImpl(
+      null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -554,8 +565,10 @@ class __$$EditNoteObjectImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$EditNoteObjectImpl implements _EditNoteObject {
-  _$EditNoteObjectImpl(this.title, this.content, this.imagePath);
+  _$EditNoteObjectImpl(this.id, this.title, this.content, this.imagePath);
 
+  @override
+  final int id;
   @override
   final String title;
   @override
@@ -565,7 +578,7 @@ class _$EditNoteObjectImpl implements _EditNoteObject {
 
   @override
   String toString() {
-    return 'EditNoteObject(title: $title, content: $content, imagePath: $imagePath)';
+    return 'EditNoteObject(id: $id, title: $title, content: $content, imagePath: $imagePath)';
   }
 
   @override
@@ -573,6 +586,7 @@ class _$EditNoteObjectImpl implements _EditNoteObject {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EditNoteObjectImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.imagePath, imagePath) ||
@@ -580,7 +594,7 @@ class _$EditNoteObjectImpl implements _EditNoteObject {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, title, content, imagePath);
+  int get hashCode => Object.hash(runtimeType, id, title, content, imagePath);
 
   @JsonKey(ignore: true)
   @override
@@ -591,10 +605,11 @@ class _$EditNoteObjectImpl implements _EditNoteObject {
 }
 
 abstract class _EditNoteObject implements EditNoteObject {
-  factory _EditNoteObject(
-          final String title, final String content, final String imagePath) =
-      _$EditNoteObjectImpl;
+  factory _EditNoteObject(final int id, final String title,
+      final String content, final String imagePath) = _$EditNoteObjectImpl;
 
+  @override
+  int get id;
   @override
   String get title;
   @override
