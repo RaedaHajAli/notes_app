@@ -1,6 +1,5 @@
 //Fab
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fullnoteapp/presentation/common/freezed_data_classes.dart';
@@ -10,7 +9,6 @@ import '../../../common/widgets/widgets.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/images_manager.dart';
 import '../../cubit/note_cubit.dart';
-
 
 class Fab extends StatefulWidget {
   const Fab({super.key});
@@ -24,6 +22,7 @@ class _FabState extends State<Fab> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
+  AutovalidateMode autovalidateMode = AutovalidateMode.always;
 
   @override
   void initState() {
@@ -67,6 +66,7 @@ class _FabState extends State<Fab> {
             height: 600,
             child: Form(
               key: formKey,
+              autovalidateMode: autovalidateMode,
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 25,
@@ -85,7 +85,7 @@ class _FabState extends State<Fab> {
                       ),
                       NoteTextFormField(
                         titleController: _contentController,
-                        hint: 'Add your title content...',
+                        hint: 'Add your note content...',
                         maxLines: 10,
                       ),
                       const SizedBox(
@@ -111,20 +111,18 @@ class _FabState extends State<Fab> {
                                   padding: const EdgeInsets.only(
                                     right: 25,
                                   ),
-                                  child:
-                                      //  _imagePickedByUser(cubit.noteImage),
-                                      cubit.noteImage != null &&
-                                              cubit.noteImage!.path.isNotEmpty
-                                          ? Image.file(
-                                              cubit.noteImage!,
-                                              height: 40,
-                                              width: 40,
-                                            )
-                                          : Image.asset(
-                                              AppImages.logo,
-                                              height: 40,
-                                              width: 40,
-                                            ));
+                                  child: cubit.noteImage != null &&
+                                          cubit.noteImage!.path.isNotEmpty
+                                      ? Image.file(
+                                          cubit.noteImage!,
+                                          height: 40,
+                                          width: 40,
+                                        )
+                                      : Image.asset(
+                                          AppImages.logo,
+                                          height: 40,
+                                          width: 40,
+                                        ));
                             },
                           )
                         ],
@@ -150,6 +148,11 @@ class _FabState extends State<Fab> {
                                 Navigator.pop(context);
                               });
                             }
+                            //  else {
+                            //   setState(() {
+                              
+                            //   });
+                            // }
                           }),
                       const SizedBox(
                         height: 25,

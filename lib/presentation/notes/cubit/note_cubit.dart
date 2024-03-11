@@ -124,4 +124,6 @@ class NoteCubit extends Cubit<NoteStates> {
   logout() {
     _appPreferences.logout();
   }
+
+  
 }

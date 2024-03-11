@@ -24,6 +24,7 @@ class _NoteDetailsViewState extends State<NoteDetailsView> {
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
+  AutovalidateMode autovalidateMode = AutovalidateMode.always;
 
   @override
   void initState() {
@@ -94,6 +95,7 @@ class _NoteDetailsViewState extends State<NoteDetailsView> {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Form(
                         key: formKey,
+                        autovalidateMode: autovalidateMode,
                         child: Column(
                           children: [
                             NoteTextFormField(
