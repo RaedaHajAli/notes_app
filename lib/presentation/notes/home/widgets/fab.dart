@@ -1,5 +1,7 @@
 //Fab
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fullnoteapp/presentation/common/freezed_data_classes.dart';
@@ -136,23 +138,34 @@ class _FabState extends State<Fab> {
                           backgroundColor: AppColor.pink,
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
-                              cubit
-                                  .addNote(AddNoteObject(
+                              if (cubit.noteImage != null) {
+                                     cubit
+                                  .addNoteWithImage(AddNoteWithImageObject(
                                       _titleController.text,
                                       _contentController.text,
-                                      cubit.noteImage?.path ?? ''))
+                                      cubit.noteImage ?? cubit.logo))
                                   .then((_) {
                                 _titleController.text = '';
                                 _contentController.text = '';
                                 cubit.noteImage = null;
                                 Navigator.pop(context);
                               });
+                            }else{
+                               cubit
+                                  .addNoteWithoutImage(AddNoteWithoutImageObject(
+                                      _titleController.text,
+                                      _contentController.text,
+                                      ))
+                                  .then((_) {
+                                _titleController.text = '';
+                                _contentController.text = '';
+                                
+                                Navigator.pop(context);
+                              });
                             }
-                            //  else {
-                            //   setState(() {
-                              
-                            //   });
-                            // }
+
+                              }
+                         
                           }),
                       const SizedBox(
                         height: 25,

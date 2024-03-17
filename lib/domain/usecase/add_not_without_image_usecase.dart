@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
 
 import 'package:fullnoteapp/domain/usecase/base_usecase.dart';
@@ -7,35 +6,35 @@ import '../../data/network/failure.dart';
 import '../../data/network/requests.dart';
 import '../models/models.dart';
 import '../repository/repository.dart';
-import 'dart:io';
 
-class AddNoteWithImageUseCase
-    implements BaseUseCase<AddNoteWithImageUseCaseInput, OperationStatus> {
+
+class AddNoteWithoutImageUseCase
+    implements BaseUseCase<AddNoteWithoutImageUseCaseInput, OperationStatus> {
   final Repository _repository;
-  AddNoteWithImageUseCase(
+  AddNoteWithoutImageUseCase(
     this._repository,
   );
 
   @override
   Future<Either<Failure, OperationStatus>> execute(
-      AddNoteWithImageUseCaseInput input) async {
-    return await _repository.addWithImage(AddNoteWithImageRequest(
+      AddNoteWithoutImageUseCaseInput input) async {
+    return await _repository.addWithoutImage(AddNoteWithoutImageRequest(
         title: input.title,
         content: input.content,
-        image: input.image,
+       
         userId: input.userId));
   }
 }
 
-class AddNoteWithImageUseCaseInput {
+class AddNoteWithoutImageUseCaseInput {
   String title;
   String content;
-  File image;
+
   int userId;
-  AddNoteWithImageUseCaseInput({
+  AddNoteWithoutImageUseCaseInput({
     required this.title,
     required this.content,
-    required this.image,
+   
     required this.userId,
   });
 }

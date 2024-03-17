@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 
+import 'dart:io';
+
 import 'package:retrofit/retrofit.dart';
 
 import '../../app/constants.dart';
@@ -21,11 +23,20 @@ abstract class AppServiceClient {
       @Field('email') String email, @Field('password') String password);
 
   //notes
-  @POST('notes/add.php')
-  Future<OperationStatusResponse> add(
+
+  @POST('notes/addwithimage.php')
+  @MultiPart()
+  Future<OperationStatusResponse> addWithImage(
+      @Part() String title,
+      @Part() String content,
+      @Part() File image,
+      @Part(name: 'user_id') int userId);
+
+  @FormUrlEncoded()
+  @POST('notes/addwithoutimage.php')
+  Future<OperationStatusResponse> addWithoutImage(
       @Field('title') String title,
       @Field('content') String content,
-      @Field('image') String image,
       @Field('user_id') int userId);
 
   @DELETE('notes/delete.php')
@@ -39,6 +50,5 @@ abstract class AppServiceClient {
   @GET('notes/view.php')
   Future<GetNotesResponse> view(
     @Field('user_id') int userId,
-  
   );
 }

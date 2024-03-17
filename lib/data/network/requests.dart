@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
 class LoginRequest {
   String email;
   String password;
@@ -23,15 +25,28 @@ class SignupRequest {
 
 //Notes
 //Add Note
-class AddNoteRequest {
+class AddNoteWithImageRequest {
   String title;
   String content;
-  String image;
+  File image;
   int userId;
-  AddNoteRequest({
+  AddNoteWithImageRequest({
     required this.title,
     required this.content,
     required this.image,
+    required this.userId,
+  });
+}
+
+class AddNoteWithoutImageRequest {
+  String title;
+  String content;
+ 
+  int userId;
+  AddNoteWithoutImageRequest({
+    required this.title,
+    required this.content,
+   
     required this.userId,
   });
 }

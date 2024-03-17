@@ -89,10 +89,61 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
-  Future<OperationStatusResponse> add(
+  Future<OperationStatusResponse> addWithImage(
     String title,
     String content,
-    String image,
+    File image,
+    int userId,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'title',
+      title,
+    ));
+    _data.fields.add(MapEntry(
+      'content',
+      content,
+    ));
+    _data.files.add(MapEntry(
+      'image',
+      MultipartFile.fromFileSync(
+        image.path,
+        filename: image.path.split(Platform.pathSeparator).last,
+      ),
+    ));
+    _data.fields.add(MapEntry(
+      'user_id',
+      userId.toString(),
+    ));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<OperationStatusResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: 'multipart/form-data',
+    )
+            .compose(
+              _dio.options,
+              'notes/addwithimage.php',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = OperationStatusResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<OperationStatusResponse> addWithoutImage(
+    String title,
+    String content,
     int userId,
   ) async {
     const _extra = <String, dynamic>{};
@@ -101,7 +152,6 @@ class _AppServiceClient implements AppServiceClient {
     final _data = {
       'title': title,
       'content': content,
-      'image': image,
       'user_id': userId,
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -109,10 +159,11 @@ class _AppServiceClient implements AppServiceClient {
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'application/x-www-form-urlencoded',
     )
             .compose(
               _dio.options,
-              'notes/add.php',
+              'notes/addwithoutimage.php',
               queryParameters: queryParameters,
               data: _data,
             )

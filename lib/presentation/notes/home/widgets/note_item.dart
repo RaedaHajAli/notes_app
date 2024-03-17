@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:fullnoteapp/app/constants.dart';
 
 
 
@@ -43,8 +44,8 @@ class NoteItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      AppImages.logo,
+                    Image.network(
+                      '${Constants.imageUrl}/${note.image}',
                       // convertStringToUint8List(note.image),
                       height: 130,
                       width: 130,

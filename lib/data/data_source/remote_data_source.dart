@@ -10,7 +10,10 @@ abstract class RemoteDataSource {
   Future<AuthenticationResponse> login(LoginRequest loginRequest);
 
   //notes
-  Future<OperationStatusResponse> add(AddNoteRequest addNoteRequest);
+  Future<OperationStatusResponse> addWithImage(
+      AddNoteWithImageRequest addNoteWithImageRequest);
+  Future<OperationStatusResponse> addWithoutImage(
+      AddNoteWithoutImageRequest addNoteWithoutImageRequest);
   Future<OperationStatusResponse> edit(EditNoteRequest editNoteRequest);
   Future<OperationStatusResponse> delete(DeleteNoteRequest deleteNoteRequest);
   Future<GetNotesResponse> view(ViewNotesRequest viewNotesRequest);
@@ -40,9 +43,17 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
 //notes
   @override
-  Future<OperationStatusResponse> add(AddNoteRequest addNoteRequest) async {
-    return await _appServiceClient.add(addNoteRequest.title,
-        addNoteRequest.content, addNoteRequest.image, addNoteRequest.userId);
+  Future<OperationStatusResponse> addWithImage(
+      AddNoteWithImageRequest addNoteWithImageRequest) async {
+    return await _appServiceClient.addWithImage(addNoteWithImageRequest.title,
+       addNoteWithImageRequest.content, addNoteWithImageRequest.image, addNoteWithImageRequest.userId);
+  }
+
+  @override
+  Future<OperationStatusResponse> addWithoutImage(
+      AddNoteWithoutImageRequest addNoteWithoutImageRequest) async {
+    return await _appServiceClient.addWithoutImage(addNoteWithoutImageRequest.title,
+        addNoteWithoutImageRequest.content,  addNoteWithoutImageRequest.userId);
   }
 
   @override
@@ -59,7 +70,6 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
   @override
   Future<GetNotesResponse> view(ViewNotesRequest viewNotesRequest) async {
-  
     return await _appServiceClient.view(viewNotesRequest.userId);
   }
 }

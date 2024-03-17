@@ -84,13 +84,46 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, OperationStatus>> add(
-      AddNoteRequest addNoteRequest) async {
+  Future<Either<Failure, OperationStatus>> addWithImage(
+      AddNoteWithImageRequest addNoteRequest) async {
     if (await _networkInfo.isConnected) {
       // there is internet connection
 
       try {
-        final response = await _remoteDataSource.add(addNoteRequest);
+        final response = await _remoteDataSource.addWithImage(addNoteRequest);
+        if (response.status == ApiInternalStatus.SUCCESS) {
+          //success
+          //return either right
+
+          return Right(response.toDomain());
+        } else {
+          //failure
+          //with status code from api
+          // return  either left
+
+          return Left(Failure(ApiInternalStatus.FAILURE,
+              response.message ?? ResponseMessage.DEFAULT));
+        }
+      } catch (e) {
+        //dio exception
+        //return either left by using error handler
+
+        return Left(ErrorHandler.handle(e).failure);
+      }
+    } else {
+      // internet connection error
+      // return  either left
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+  @override
+  Future<Either<Failure, OperationStatus>> addWithoutImage(
+      AddNoteWithoutImageRequest addNoteWithoutImageRequest) async {
+    if (await _networkInfo.isConnected) {
+      // there is internet connection
+
+      try {
+        final response = await _remoteDataSource.addWithoutImage(addNoteWithoutImageRequest);
         if (response.status == ApiInternalStatus.SUCCESS) {
           //success
           //return either right
@@ -188,7 +221,6 @@ class RepositoryImpl implements Repository {
   @override
   Future<Either<Failure, NotesList>> view(
       ViewNotesRequest viewNotesRequest) async {
-
     if (await _networkInfo.isConnected) {
       // there is internet connection
 
@@ -197,7 +229,7 @@ class RepositoryImpl implements Repository {
         if (response.status == ApiInternalStatus.SUCCESS) {
           //success
           //return either right
-       
+
           return Right(response.toDomain());
         } else {
           //failure
