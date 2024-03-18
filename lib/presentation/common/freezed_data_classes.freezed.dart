@@ -306,7 +306,7 @@ abstract class _SignupObject implements SignupObject {
 mixin _$AddNoteWithImageObject {
   String get title => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
-  File get image => throw _privateConstructorUsedError;
+  File? get image => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddNoteWithImageObjectCopyWith<AddNoteWithImageObject> get copyWith =>
@@ -319,7 +319,7 @@ abstract class $AddNoteWithImageObjectCopyWith<$Res> {
           $Res Function(AddNoteWithImageObject) then) =
       _$AddNoteWithImageObjectCopyWithImpl<$Res, AddNoteWithImageObject>;
   @useResult
-  $Res call({String title, String content, File image});
+  $Res call({String title, String content, File? image});
 }
 
 /// @nodoc
@@ -338,7 +338,7 @@ class _$AddNoteWithImageObjectCopyWithImpl<$Res,
   $Res call({
     Object? title = null,
     Object? content = null,
-    Object? image = null,
+    Object? image = freezed,
   }) {
     return _then(_value.copyWith(
       title: null == title
@@ -349,10 +349,10 @@ class _$AddNoteWithImageObjectCopyWithImpl<$Res,
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      image: null == image
+      image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as File,
+              as File?,
     ) as $Val);
   }
 }
@@ -366,7 +366,7 @@ abstract class _$$AddNoteWithImageObjectImplCopyWith<$Res>
       __$$AddNoteWithImageObjectImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, String content, File image});
+  $Res call({String title, String content, File? image});
 }
 
 /// @nodoc
@@ -384,7 +384,7 @@ class __$$AddNoteWithImageObjectImplCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? content = null,
-    Object? image = null,
+    Object? image = freezed,
   }) {
     return _then(_$AddNoteWithImageObjectImpl(
       null == title
@@ -395,10 +395,10 @@ class __$$AddNoteWithImageObjectImplCopyWithImpl<$Res>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      null == image
+      freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as File,
+              as File?,
     ));
   }
 }
@@ -413,7 +413,7 @@ class _$AddNoteWithImageObjectImpl implements _AddNoteWithImageObject {
   @override
   final String content;
   @override
-  final File image;
+  final File? image;
 
   @override
   String toString() {
@@ -443,7 +443,7 @@ class _$AddNoteWithImageObjectImpl implements _AddNoteWithImageObject {
 
 abstract class _AddNoteWithImageObject implements AddNoteWithImageObject {
   factory _AddNoteWithImageObject(
-          final String title, final String content, final File image) =
+          final String title, final String content, final File? image) =
       _$AddNoteWithImageObjectImpl;
 
   @override
@@ -451,7 +451,7 @@ abstract class _AddNoteWithImageObject implements AddNoteWithImageObject {
   @override
   String get content;
   @override
-  File get image;
+  File? get image;
   @override
   @JsonKey(ignore: true)
   _$$AddNoteWithImageObjectImplCopyWith<_$AddNoteWithImageObjectImpl>

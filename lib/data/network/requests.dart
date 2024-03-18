@@ -28,7 +28,7 @@ class SignupRequest {
 class AddNoteWithImageRequest {
   String title;
   String content;
-  File image;
+  File? image;
   int userId;
   AddNoteWithImageRequest({
     required this.title,
@@ -41,12 +41,11 @@ class AddNoteWithImageRequest {
 class AddNoteWithoutImageRequest {
   String title;
   String content;
- 
+
   int userId;
   AddNoteWithoutImageRequest({
     required this.title,
     required this.content,
-   
     required this.userId,
   });
 }
@@ -66,8 +65,10 @@ class EditNoteRequest {
 //delete note
 class DeleteNoteRequest {
   int noteId;
+  String imageName;
   DeleteNoteRequest({
     required this.noteId,
+    required this.imageName
   });
 }
 

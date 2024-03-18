@@ -98,7 +98,7 @@ class _HomeViewState extends State<HomeView> {
       backgroundColor: backgroundColor,
       note: note,
       onPressedDelete: () {
-        cubit.deleteNote(note.id);
+        cubit.deleteNote(note.id,note.image);
       },
       onTapNote: () {
         Navigator.pushNamed(context, Routes.noteDetailsRoute,

@@ -19,7 +19,7 @@ class AddNoteWithImageUseCase
   @override
   Future<Either<Failure, OperationStatus>> execute(
       AddNoteWithImageUseCaseInput input) async {
-    return await _repository.addWithImage(AddNoteWithImageRequest(
+    return await _repository.add(AddNoteWithImageRequest(
         title: input.title,
         content: input.content,
         image: input.image,
@@ -30,7 +30,7 @@ class AddNoteWithImageUseCase
 class AddNoteWithImageUseCaseInput {
   String title;
   String content;
-  File image;
+  File? image;
   int userId;
   AddNoteWithImageUseCaseInput({
     required this.title,

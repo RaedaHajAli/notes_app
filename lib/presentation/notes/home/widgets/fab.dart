@@ -139,33 +139,31 @@ class _FabState extends State<Fab> {
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
                               if (cubit.noteImage != null) {
-                                     cubit
-                                  .addNoteWithImage(AddNoteWithImageObject(
-                                      _titleController.text,
-                                      _contentController.text,
-                                      cubit.noteImage ?? cubit.logo))
-                                  .then((_) {
-                                _titleController.text = '';
-                                _contentController.text = '';
-                                cubit.noteImage = null;
-                                Navigator.pop(context);
-                              });
-                            }else{
-                               cubit
-                                  .addNoteWithoutImage(AddNoteWithoutImageObject(
-                                      _titleController.text,
-                                      _contentController.text,
-                                      ))
-                                  .then((_) {
-                                _titleController.text = '';
-                                _contentController.text = '';
-                                
-                                Navigator.pop(context);
-                              });
-                            }
+                                cubit
+                                    .add(AddNoteWithImageObject(
+                                        _titleController.text,
+                                        _contentController.text,
+                                        cubit.noteImage))
+                                    .then((_) {
+                                  _titleController.text = '';
+                                  _contentController.text = '';
+                                  cubit.noteImage = null;
+                                  Navigator.pop(context);
+                                });
+                              } else {
+                                cubit
+                                    .add(AddNoteWithImageObject(
+                                        _titleController.text,
+                                        _contentController.text,
+                                        null))
+                                    .then((_) {
+                                  _titleController.text = '';
+                                  _contentController.text = '';
 
+                                  Navigator.pop(context);
+                                });
                               }
-                         
+                            }
                           }),
                       const SizedBox(
                         height: 25,

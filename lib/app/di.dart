@@ -17,7 +17,7 @@ import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../domain/usecase/add_not_without_image_usecase.dart';
+
 import '../domain/usecase/login_usecase.dart';
 import '../domain/usecase/signup_usecase.dart';
 import '../presentation/auth/login/viewmodel/login_viewmodel.dart';
@@ -67,8 +67,7 @@ initHomeModule() {
         () => ViewNoteUseCase(instance<Repository>()));
     instance.registerFactory<AddNoteWithImageUseCase>(
         () => AddNoteWithImageUseCase(instance<Repository>()));
-        instance.registerFactory<AddNoteWithoutImageUseCase>(
-        () => AddNoteWithoutImageUseCase(instance<Repository>()));
+       
     instance.registerFactory<DeleteNoteUseCase>(
         () => DeleteNoteUseCase(instance<Repository>()));
 

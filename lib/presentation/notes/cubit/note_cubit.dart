@@ -2,11 +2,11 @@
 import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fullnoteapp/domain/usecase/add_not_without_image_usecase.dart';
+
 import 'package:fullnoteapp/presentation/common/freezed_data_classes.dart';
 
 import 'package:fullnoteapp/presentation/notes/cubit/note_states.dart';
-import 'package:fullnoteapp/presentation/resources/images_manager.dart';
+
 
 import '../../../app/app_prefs.dart';
 
@@ -22,14 +22,13 @@ class NoteCubit extends Cubit<NoteStates> {
     this._viewNoteUseCase,
     this._deleteNoteUseCase,
     this._addNoteWithImageUseCase,
-    this._addNoteWithoutImageUseCase,
     this._editNoteUseCase,
     this._appPreferences,
   ) : super(InitialNoteState());
   final ViewNoteUseCase _viewNoteUseCase;
   final DeleteNoteUseCase _deleteNoteUseCase;
   final AddNoteWithImageUseCase _addNoteWithImageUseCase;
-  final AddNoteWithoutImageUseCase _addNoteWithoutImageUseCase;
+
   final EditNoteUseCase _editNoteUseCase;
   final AppPreferences _appPreferences;
   int? userId;
@@ -62,8 +61,7 @@ class NoteCubit extends Cubit<NoteStates> {
     }
   }
 
-  Future<void> addNoteWithImage(
-      AddNoteWithImageObject addNoteWithImageObject) async {
+  Future<void> add(AddNoteWithImageObject addNoteWithImageObject) async {
     emit(LoadingAddNoteState());
     (await _addNoteWithImageUseCase.execute(AddNoteWithImageUseCaseInput(
             title: addNoteWithImageObject.title,
@@ -81,28 +79,11 @@ class NoteCubit extends Cubit<NoteStates> {
       getNotes();
     });
   }
-  
-  Future<void> addNoteWithoutImage(
-      AddNoteWithoutImageObject addNoteWithoutImageObject) async {
-    emit(LoadingAddNoteState());
-    (await _addNoteWithoutImageUseCase.execute(AddNoteWithoutImageUseCaseInput(
-            title: addNoteWithoutImageObject.title,
-            content: addNoteWithoutImageObject.content,
-           
-            userId: userId!)))
-        .fold((failure) {
-      emit(FailureAddNoteState());
-      print(failure.message);
-    }, (data) {
-      emit(SuccessAddNoteState());
 
-      getNotes();
-    });
-  }
-
-  deleteNote(int noteId) async {
+  deleteNote(int noteId, String imageName) async {
     emit(LoadingDeleteNoteState());
-    (await _deleteNoteUseCase.execute(DeleteNoteUseCaseInput(noteId: noteId)))
+    (await _deleteNoteUseCase.execute(
+            DeleteNoteUseCaseInput(noteId: noteId, imageName: imageName)))
         .fold((failure) {
       emit(FailureDeleteNoteState());
     }, (operationStatus) {
@@ -130,19 +111,29 @@ class NoteCubit extends Cubit<NoteStates> {
 
   ImagePicker picker = ImagePicker();
   File? noteImage;
-  File logo = File(AppImages.logo);
+
   //Pick Image
   pickImageFromCamera() async {
     var image = await picker.pickImage(source: ImageSource.camera);
-
-    noteImage = File(image?.path ?? '');
-    emit(PickImageNoteState());
+    if (image != null) {
+      noteImage = File(image.path);
+      print(' **********${image.path}');
+      emit(PickImageSuccessNoteState());
+    } else {
+      noteImage = null;
+      emit(PickImageFailureNoteState());
+    }
   }
 
   pickImageFromGallery() async {
     var image = await picker.pickImage(source: ImageSource.gallery);
-    noteImage = (File(image?.path ?? ''));
-    emit(PickImageNoteState());
+    if (image != null) {
+      noteImage = File(image.path);
+      emit(PickImageSuccessNoteState());
+    } else {
+      noteImage = null;
+      emit(PickImageFailureNoteState());
+    }
   }
 
   logout() {

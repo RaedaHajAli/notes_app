@@ -26,21 +26,18 @@ abstract class AppServiceClient {
 
   @POST('notes/addwithimage.php')
   @MultiPart()
-  Future<OperationStatusResponse> addWithImage(
-      @Part() String title,
-      @Part() String content,
-      @Part() File image,
-      @Part(name: 'user_id') int userId);
+  Future<OperationStatusResponse> add(
+    @Part() String title,
+    @Part() String content,
+    @Part(name: 'user_id') int userId, {
+    @Part() File? image,
+  });
 
-  @FormUrlEncoded()
-  @POST('notes/addwithoutimage.php')
-  Future<OperationStatusResponse> addWithoutImage(
-      @Field('title') String title,
-      @Field('content') String content,
-      @Field('user_id') int userId);
+  
 
   @DELETE('notes/delete.php')
-  Future<OperationStatusResponse> delete(@Field('note_id') int noteId);
+  Future<OperationStatusResponse> delete(
+      @Field('note_id') int noteId, @Field('image_name') String imageName);
   @PUT('notes/edit.php')
   Future<OperationStatusResponse> edit(
     @Field('note_id') int noteId,

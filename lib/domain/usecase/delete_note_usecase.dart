@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
+
 import 'package:fullnoteapp/data/network/failure.dart';
 import 'package:fullnoteapp/data/network/requests.dart';
 import 'package:fullnoteapp/domain/models/models.dart';
@@ -16,13 +18,15 @@ class DeleteNoteUseCase
   @override
   Future<Either<Failure, OperationStatus>> execute(
       DeleteNoteUseCaseInput input) async {
-    return await _repository.delete(DeleteNoteRequest(noteId: input.noteId));
+    return await _repository.delete(DeleteNoteRequest(noteId: input.noteId,imageName: input.imageName));
   }
 }
 
 class DeleteNoteUseCaseInput {
   int noteId;
+  String imageName;
   DeleteNoteUseCaseInput({
     required this.noteId,
+    required this.imageName,
   });
 }

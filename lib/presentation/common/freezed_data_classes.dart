@@ -18,7 +18,7 @@ class SignupObject with _$SignupObject {
 
 @freezed
 class AddNoteWithImageObject with _$AddNoteWithImageObject {
-  factory AddNoteWithImageObject(String title, String content, File image) =
+  factory AddNoteWithImageObject(String title, String content, File? image) =
       _AddNoteWithImageObject;
 }
 @freezed

@@ -89,14 +89,15 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
-  Future<OperationStatusResponse> addWithImage(
+  Future<OperationStatusResponse> add(
     String title,
     String content,
-    File image,
-    int userId,
-  ) async {
+    int userId, {
+    File? image,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = FormData();
     _data.fields.add(MapEntry(
@@ -107,17 +108,19 @@ class _AppServiceClient implements AppServiceClient {
       'content',
       content,
     ));
-    _data.files.add(MapEntry(
-      'image',
-      MultipartFile.fromFileSync(
-        image.path,
-        filename: image.path.split(Platform.pathSeparator).last,
-      ),
-    ));
     _data.fields.add(MapEntry(
       'user_id',
       userId.toString(),
     ));
+    if (image != null) {
+      _data.files.add(MapEntry(
+        'image',
+        MultipartFile.fromFileSync(
+          image.path,
+          filename: image.path.split(Platform.pathSeparator).last,
+        ),
+      ));
+    }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<OperationStatusResponse>(Options(
       method: 'POST',
@@ -177,11 +180,17 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
-  Future<OperationStatusResponse> delete(int noteId) async {
+  Future<OperationStatusResponse> delete(
+    int noteId,
+    String imageName,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {'note_id': noteId};
+    final _data = {
+      'note_id': noteId,
+      'image_name': imageName,
+    };
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<OperationStatusResponse>(Options(
       method: 'DELETE',

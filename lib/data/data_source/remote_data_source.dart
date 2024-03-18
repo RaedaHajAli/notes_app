@@ -10,10 +10,9 @@ abstract class RemoteDataSource {
   Future<AuthenticationResponse> login(LoginRequest loginRequest);
 
   //notes
-  Future<OperationStatusResponse> addWithImage(
+  Future<OperationStatusResponse> add(
       AddNoteWithImageRequest addNoteWithImageRequest);
-  Future<OperationStatusResponse> addWithoutImage(
-      AddNoteWithoutImageRequest addNoteWithoutImageRequest);
+  
   Future<OperationStatusResponse> edit(EditNoteRequest editNoteRequest);
   Future<OperationStatusResponse> delete(DeleteNoteRequest deleteNoteRequest);
   Future<GetNotesResponse> view(ViewNotesRequest viewNotesRequest);
@@ -43,18 +42,23 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
 //notes
   @override
-  Future<OperationStatusResponse> addWithImage(
+  Future<OperationStatusResponse> add(
       AddNoteWithImageRequest addNoteWithImageRequest) async {
-    return await _appServiceClient.addWithImage(addNoteWithImageRequest.title,
-       addNoteWithImageRequest.content, addNoteWithImageRequest.image, addNoteWithImageRequest.userId);
+          return await _appServiceClient.add(addNoteWithImageRequest.title,
+          addNoteWithImageRequest.content, addNoteWithImageRequest.userId,
+          image: addNoteWithImageRequest.image);
+    // if (addNoteWithImageRequest.image != null) {
+    
+    // } else {
+    //   return await _appServiceClient.add(
+    //     addNoteWithImageRequest.title,
+    //     addNoteWithImageRequest.content,
+    //     addNoteWithImageRequest.userId,
+    //   );
+    // }
   }
 
-  @override
-  Future<OperationStatusResponse> addWithoutImage(
-      AddNoteWithoutImageRequest addNoteWithoutImageRequest) async {
-    return await _appServiceClient.addWithoutImage(addNoteWithoutImageRequest.title,
-        addNoteWithoutImageRequest.content,  addNoteWithoutImageRequest.userId);
-  }
+  
 
   @override
   Future<OperationStatusResponse> edit(EditNoteRequest editNoteRequest) async {
@@ -65,7 +69,8 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   @override
   Future<OperationStatusResponse> delete(
       DeleteNoteRequest deleteNoteRequest) async {
-    return await _appServiceClient.delete(deleteNoteRequest.noteId);
+    return await _appServiceClient.delete(
+        deleteNoteRequest.noteId, deleteNoteRequest.imageName);
   }
 
   @override

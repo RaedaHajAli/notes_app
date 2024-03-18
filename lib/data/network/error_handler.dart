@@ -1,8 +1,5 @@
-
 import 'package:dio/dio.dart';
 import '../../data/network/failure.dart';
-
-
 
 import '../../presentation/resources/strings_manager.dart';
 
@@ -36,7 +33,8 @@ Failure _handleError(DioException error) {
     case DioExceptionType.connectionError:
       return DataSource.NO_INTERNET_CONNECTION.getFailure();
     case DioExceptionType.unknown:
-      return DataSource.DEFAULT.getFailure();
+      return  DataSource.DEFAULT.getFailure();
+      
   }
 }
 
@@ -139,7 +137,7 @@ class ResponseMessage {
 
   //local status code
   static const String CONNECT_TIMEOUT = AppStrings.timeoutError;
-  static const String CANCEL =AppStrings.cancelError ;
+  static const String CANCEL = AppStrings.cancelError;
   static const String RECEIVE_TIMEOUT = AppStrings.timeoutError;
   static const String SEND_TIMEOUT = AppStrings.timeoutError;
   static const String CACHE_ERROR = AppStrings.cacheError;
