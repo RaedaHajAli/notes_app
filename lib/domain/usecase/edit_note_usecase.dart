@@ -1,5 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
+
 
 import 'package:fullnoteapp/data/network/failure.dart';
 import 'package:fullnoteapp/data/network/requests.dart';
@@ -14,11 +17,18 @@ class EditNoteUseCase
   EditNoteUseCase(
     this._repository,
   );
+
+
   @override
   Future<Either<Failure, OperationStatus>> execute(
       EditNoteUseCaseInput input) async {
     return await _repository.edit(EditNoteRequest(
-        noteId: input.noteId, title: input.title, content: input.content));
+        noteId: input.noteId,
+        title: input.title,
+        content: input.content,
+        imageName: input.imageName,
+        
+        newImage: input.newImage));
   }
 }
 
@@ -26,11 +36,13 @@ class EditNoteUseCaseInput {
   int noteId;
   String title;
   String content;
-  // String image;
+  String imageName;
+  File? newImage;
   EditNoteUseCaseInput({
     required this.noteId,
     required this.title,
     required this.content,
-    // required this.image
+    required this.imageName,
+    required this.newImage,
   });
 }

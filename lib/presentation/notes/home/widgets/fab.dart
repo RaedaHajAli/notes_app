@@ -25,6 +25,7 @@ class _FabState extends State<Fab> {
   final TextEditingController _contentController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.always;
+  File? noteImage;
 
   @override
   void initState() {
@@ -98,8 +99,8 @@ class _FabState extends State<Fab> {
                           const Icon(Icons.image_outlined,
                               color: AppColor.mediumPurple),
                           TextButton(
-                              onPressed: () {
-                                cubit.pickImageFromGallery();
+                              onPressed: () async {
+                                noteImage = await cubit.pickImageFromGallery();
                               },
                               child: const Text(
                                 'Add Image',
@@ -113,10 +114,10 @@ class _FabState extends State<Fab> {
                                   padding: const EdgeInsets.only(
                                     right: 25,
                                   ),
-                                  child: cubit.noteImage != null &&
-                                          cubit.noteImage!.path.isNotEmpty
+                                  child: noteImage != null &&
+                                          noteImage!.path.isNotEmpty
                                       ? Image.file(
-                                          cubit.noteImage!,
+                                          noteImage!,
                                           height: 40,
                                           width: 40,
                                         )
@@ -138,24 +139,20 @@ class _FabState extends State<Fab> {
                           backgroundColor: AppColor.pink,
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
-                              if (cubit.noteImage != null) {
+                              if (noteImage != null) {
                                 cubit
-                                    .add(AddNoteWithImageObject(
-                                        _titleController.text,
-                                        _contentController.text,
-                                        cubit.noteImage))
+                                    .add(AddNoteObject(_titleController.text,
+                                        _contentController.text, noteImage))
                                     .then((_) {
                                   _titleController.text = '';
                                   _contentController.text = '';
-                                  cubit.noteImage = null;
+                                  noteImage = null;
                                   Navigator.pop(context);
                                 });
                               } else {
                                 cubit
-                                    .add(AddNoteWithImageObject(
-                                        _titleController.text,
-                                        _contentController.text,
-                                        null))
+                                    .add(AddNoteObject(_titleController.text,
+                                        _contentController.text, null))
                                     .then((_) {
                                   _titleController.text = '';
                                   _contentController.text = '';

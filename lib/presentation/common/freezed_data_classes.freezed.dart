@@ -303,30 +303,29 @@ abstract class _SignupObject implements SignupObject {
 }
 
 /// @nodoc
-mixin _$AddNoteWithImageObject {
+mixin _$AddNoteObject {
   String get title => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   File? get image => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $AddNoteWithImageObjectCopyWith<AddNoteWithImageObject> get copyWith =>
+  $AddNoteObjectCopyWith<AddNoteObject> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AddNoteWithImageObjectCopyWith<$Res> {
-  factory $AddNoteWithImageObjectCopyWith(AddNoteWithImageObject value,
-          $Res Function(AddNoteWithImageObject) then) =
-      _$AddNoteWithImageObjectCopyWithImpl<$Res, AddNoteWithImageObject>;
+abstract class $AddNoteObjectCopyWith<$Res> {
+  factory $AddNoteObjectCopyWith(
+          AddNoteObject value, $Res Function(AddNoteObject) then) =
+      _$AddNoteObjectCopyWithImpl<$Res, AddNoteObject>;
   @useResult
   $Res call({String title, String content, File? image});
 }
 
 /// @nodoc
-class _$AddNoteWithImageObjectCopyWithImpl<$Res,
-        $Val extends AddNoteWithImageObject>
-    implements $AddNoteWithImageObjectCopyWith<$Res> {
-  _$AddNoteWithImageObjectCopyWithImpl(this._value, this._then);
+class _$AddNoteObjectCopyWithImpl<$Res, $Val extends AddNoteObject>
+    implements $AddNoteObjectCopyWith<$Res> {
+  _$AddNoteObjectCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -359,7 +358,7 @@ class _$AddNoteWithImageObjectCopyWithImpl<$Res,
 
 /// @nodoc
 abstract class _$$AddNoteWithImageObjectImplCopyWith<$Res>
-    implements $AddNoteWithImageObjectCopyWith<$Res> {
+    implements $AddNoteObjectCopyWith<$Res> {
   factory _$$AddNoteWithImageObjectImplCopyWith(
           _$AddNoteWithImageObjectImpl value,
           $Res Function(_$AddNoteWithImageObjectImpl) then) =
@@ -371,8 +370,7 @@ abstract class _$$AddNoteWithImageObjectImplCopyWith<$Res>
 
 /// @nodoc
 class __$$AddNoteWithImageObjectImplCopyWithImpl<$Res>
-    extends _$AddNoteWithImageObjectCopyWithImpl<$Res,
-        _$AddNoteWithImageObjectImpl>
+    extends _$AddNoteObjectCopyWithImpl<$Res, _$AddNoteWithImageObjectImpl>
     implements _$$AddNoteWithImageObjectImplCopyWith<$Res> {
   __$$AddNoteWithImageObjectImplCopyWithImpl(
       _$AddNoteWithImageObjectImpl _value,
@@ -417,7 +415,7 @@ class _$AddNoteWithImageObjectImpl implements _AddNoteWithImageObject {
 
   @override
   String toString() {
-    return 'AddNoteWithImageObject(title: $title, content: $content, image: $image)';
+    return 'AddNoteObject(title: $title, content: $content, image: $image)';
   }
 
   @override
@@ -441,7 +439,7 @@ class _$AddNoteWithImageObjectImpl implements _AddNoteWithImageObject {
           _$AddNoteWithImageObjectImpl>(this, _$identity);
 }
 
-abstract class _AddNoteWithImageObject implements AddNoteWithImageObject {
+abstract class _AddNoteWithImageObject implements AddNoteObject {
   factory _AddNoteWithImageObject(
           final String title, final String content, final File? image) =
       _$AddNoteWithImageObjectImpl;
@@ -459,150 +457,12 @@ abstract class _AddNoteWithImageObject implements AddNoteWithImageObject {
 }
 
 /// @nodoc
-mixin _$AddNoteWithoutImageObject {
-  String get title => throw _privateConstructorUsedError;
-  String get content => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $AddNoteWithoutImageObjectCopyWith<AddNoteWithoutImageObject> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $AddNoteWithoutImageObjectCopyWith<$Res> {
-  factory $AddNoteWithoutImageObjectCopyWith(AddNoteWithoutImageObject value,
-          $Res Function(AddNoteWithoutImageObject) then) =
-      _$AddNoteWithoutImageObjectCopyWithImpl<$Res, AddNoteWithoutImageObject>;
-  @useResult
-  $Res call({String title, String content});
-}
-
-/// @nodoc
-class _$AddNoteWithoutImageObjectCopyWithImpl<$Res,
-        $Val extends AddNoteWithoutImageObject>
-    implements $AddNoteWithoutImageObjectCopyWith<$Res> {
-  _$AddNoteWithoutImageObjectCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? title = null,
-    Object? content = null,
-  }) {
-    return _then(_value.copyWith(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$AddNoteWithoutImageObjectImplCopyWith<$Res>
-    implements $AddNoteWithoutImageObjectCopyWith<$Res> {
-  factory _$$AddNoteWithoutImageObjectImplCopyWith(
-          _$AddNoteWithoutImageObjectImpl value,
-          $Res Function(_$AddNoteWithoutImageObjectImpl) then) =
-      __$$AddNoteWithoutImageObjectImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String title, String content});
-}
-
-/// @nodoc
-class __$$AddNoteWithoutImageObjectImplCopyWithImpl<$Res>
-    extends _$AddNoteWithoutImageObjectCopyWithImpl<$Res,
-        _$AddNoteWithoutImageObjectImpl>
-    implements _$$AddNoteWithoutImageObjectImplCopyWith<$Res> {
-  __$$AddNoteWithoutImageObjectImplCopyWithImpl(
-      _$AddNoteWithoutImageObjectImpl _value,
-      $Res Function(_$AddNoteWithoutImageObjectImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? title = null,
-    Object? content = null,
-  }) {
-    return _then(_$AddNoteWithoutImageObjectImpl(
-      null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$AddNoteWithoutImageObjectImpl implements _AddNoteWithoutImageObject {
-  _$AddNoteWithoutImageObjectImpl(this.title, this.content);
-
-  @override
-  final String title;
-  @override
-  final String content;
-
-  @override
-  String toString() {
-    return 'AddNoteWithoutImageObject(title: $title, content: $content)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$AddNoteWithoutImageObjectImpl &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.content, content) || other.content == content));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, title, content);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$AddNoteWithoutImageObjectImplCopyWith<_$AddNoteWithoutImageObjectImpl>
-      get copyWith => __$$AddNoteWithoutImageObjectImplCopyWithImpl<
-          _$AddNoteWithoutImageObjectImpl>(this, _$identity);
-}
-
-abstract class _AddNoteWithoutImageObject implements AddNoteWithoutImageObject {
-  factory _AddNoteWithoutImageObject(final String title, final String content) =
-      _$AddNoteWithoutImageObjectImpl;
-
-  @override
-  String get title;
-  @override
-  String get content;
-  @override
-  @JsonKey(ignore: true)
-  _$$AddNoteWithoutImageObjectImplCopyWith<_$AddNoteWithoutImageObjectImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
 mixin _$EditNoteObject {
   int get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
-  File get image => throw _privateConstructorUsedError;
+  String get imageName => throw _privateConstructorUsedError;
+  File? get newImage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $EditNoteObjectCopyWith<EditNoteObject> get copyWith =>
@@ -615,7 +475,8 @@ abstract class $EditNoteObjectCopyWith<$Res> {
           EditNoteObject value, $Res Function(EditNoteObject) then) =
       _$EditNoteObjectCopyWithImpl<$Res, EditNoteObject>;
   @useResult
-  $Res call({int id, String title, String content, File image});
+  $Res call(
+      {int id, String title, String content, String imageName, File? newImage});
 }
 
 /// @nodoc
@@ -634,7 +495,8 @@ class _$EditNoteObjectCopyWithImpl<$Res, $Val extends EditNoteObject>
     Object? id = null,
     Object? title = null,
     Object? content = null,
-    Object? image = null,
+    Object? imageName = null,
+    Object? newImage = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -649,10 +511,14 @@ class _$EditNoteObjectCopyWithImpl<$Res, $Val extends EditNoteObject>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      image: null == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as File,
+      imageName: null == imageName
+          ? _value.imageName
+          : imageName // ignore: cast_nullable_to_non_nullable
+              as String,
+      newImage: freezed == newImage
+          ? _value.newImage
+          : newImage // ignore: cast_nullable_to_non_nullable
+              as File?,
     ) as $Val);
   }
 }
@@ -665,7 +531,8 @@ abstract class _$$EditNoteObjectImplCopyWith<$Res>
       __$$EditNoteObjectImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String title, String content, File image});
+  $Res call(
+      {int id, String title, String content, String imageName, File? newImage});
 }
 
 /// @nodoc
@@ -682,7 +549,8 @@ class __$$EditNoteObjectImplCopyWithImpl<$Res>
     Object? id = null,
     Object? title = null,
     Object? content = null,
-    Object? image = null,
+    Object? imageName = null,
+    Object? newImage = freezed,
   }) {
     return _then(_$EditNoteObjectImpl(
       null == id
@@ -697,10 +565,14 @@ class __$$EditNoteObjectImplCopyWithImpl<$Res>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      null == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as File,
+      null == imageName
+          ? _value.imageName
+          : imageName // ignore: cast_nullable_to_non_nullable
+              as String,
+      freezed == newImage
+          ? _value.newImage
+          : newImage // ignore: cast_nullable_to_non_nullable
+              as File?,
     ));
   }
 }
@@ -708,7 +580,8 @@ class __$$EditNoteObjectImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$EditNoteObjectImpl implements _EditNoteObject {
-  _$EditNoteObjectImpl(this.id, this.title, this.content, this.image);
+  _$EditNoteObjectImpl(
+      this.id, this.title, this.content, this.imageName, this.newImage);
 
   @override
   final int id;
@@ -717,11 +590,13 @@ class _$EditNoteObjectImpl implements _EditNoteObject {
   @override
   final String content;
   @override
-  final File image;
+  final String imageName;
+  @override
+  final File? newImage;
 
   @override
   String toString() {
-    return 'EditNoteObject(id: $id, title: $title, content: $content, image: $image)';
+    return 'EditNoteObject(id: $id, title: $title, content: $content, imageName: $imageName, newImage: $newImage)';
   }
 
   @override
@@ -732,11 +607,15 @@ class _$EditNoteObjectImpl implements _EditNoteObject {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.content, content) || other.content == content) &&
-            (identical(other.image, image) || other.image == image));
+            (identical(other.imageName, imageName) ||
+                other.imageName == imageName) &&
+            (identical(other.newImage, newImage) ||
+                other.newImage == newImage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, content, image);
+  int get hashCode =>
+      Object.hash(runtimeType, id, title, content, imageName, newImage);
 
   @JsonKey(ignore: true)
   @override
@@ -747,8 +626,12 @@ class _$EditNoteObjectImpl implements _EditNoteObject {
 }
 
 abstract class _EditNoteObject implements EditNoteObject {
-  factory _EditNoteObject(final int id, final String title,
-      final String content, final File image) = _$EditNoteObjectImpl;
+  factory _EditNoteObject(
+      final int id,
+      final String title,
+      final String content,
+      final String imageName,
+      final File? newImage) = _$EditNoteObjectImpl;
 
   @override
   int get id;
@@ -757,7 +640,9 @@ abstract class _EditNoteObject implements EditNoteObject {
   @override
   String get content;
   @override
-  File get image;
+  String get imageName;
+  @override
+  File? get newImage;
   @override
   @JsonKey(ignore: true)
   _$$EditNoteObjectImplCopyWith<_$EditNoteObjectImpl> get copyWith =>

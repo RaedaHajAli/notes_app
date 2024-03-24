@@ -130,43 +130,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'notes/addwithimage.php',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = OperationStatusResponse.fromJson(_result.data!);
-    return value;
-  }
-
-  @override
-  Future<OperationStatusResponse> addWithoutImage(
-    String title,
-    String content,
-    int userId,
-  ) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = {
-      'title': title,
-      'content': content,
-      'user_id': userId,
-    };
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<OperationStatusResponse>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-      contentType: 'application/x-www-form-urlencoded',
-    )
-            .compose(
-              _dio.options,
-              'notes/addwithoutimage.php',
+              'notes/add.php',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -187,15 +151,21 @@ class _AppServiceClient implements AppServiceClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {
-      'note_id': noteId,
-      'image_name': imageName,
-    };
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'note_id',
+      noteId.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'image_name',
+      imageName,
+    ));
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<OperationStatusResponse>(Options(
-      method: 'DELETE',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,
@@ -217,20 +187,45 @@ class _AppServiceClient implements AppServiceClient {
     int noteId,
     String title,
     String content,
-  ) async {
+    String imageName, {
+    File? newImage,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = {
-      'note_id': noteId,
-      'title': title,
-      'content': content,
-    };
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'note_id',
+      noteId.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'title',
+      title,
+    ));
+    _data.fields.add(MapEntry(
+      'content',
+      content,
+    ));
+    _data.fields.add(MapEntry(
+      'image_name',
+      imageName,
+    ));
+    if (newImage != null) {
+      _data.files.add(MapEntry(
+        'new_image',
+        MultipartFile.fromFileSync(
+          newImage.path,
+          filename: newImage.path.split(Platform.pathSeparator).last,
+        ),
+      ));
+    }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<OperationStatusResponse>(Options(
-      method: 'PUT',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,

@@ -7,8 +7,6 @@ import 'package:fullnoteapp/presentation/resources/color_manager.dart';
 
 import '../../../../domain/models/models.dart';
 
-
-
 import '../../resources/route_manager.dart';
 import 'widgets/fab.dart';
 import 'widgets/note_item.dart';
@@ -22,6 +20,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   late NoteCubit cubit;
+  List<Note> notes = [];
 
   @override
   void initState() {
@@ -67,7 +66,8 @@ class _HomeViewState extends State<HomeView> {
 //Home
   Widget _getContentWidget() {
     return BlocBuilder<NoteCubit, NoteStates>(builder: (context, state) {
-      if (cubit.notes.isEmpty) {
+      notes = cubit.notes;
+      if (notes.isEmpty) {
         return const Center(
             child: Text(
           'There isn\'t any note yet',
@@ -81,12 +81,12 @@ class _HomeViewState extends State<HomeView> {
                 crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
                 mainAxisSpacing: 12,
                 crossAxisSpacing: 12,
-                children: List.generate(cubit.notes.length, (index) {
+                children: List.generate(notes.length, (index) {
                   Color backgroundColor =
                       AppColor.notesColor[index % AppColor.notesColor.length];
 
                   return buildNoteItem(
-                      backgroundColor, cubit.notes[index], context);
+                      backgroundColor, notes[index], context);
                 })));
       }
     });
@@ -98,9 +98,12 @@ class _HomeViewState extends State<HomeView> {
       backgroundColor: backgroundColor,
       note: note,
       onPressedDelete: () {
-        cubit.deleteNote(note.id,note.image);
+        cubit.deleteNote(note.id, note.image);
       },
       onTapNote: () {
+        // Navigator.pushNamedAndRemoveUntil(
+        //     context, Routes.noteDetailsRoute, (route) => false,
+        //     arguments: note.toJson());
         Navigator.pushNamed(context, Routes.noteDetailsRoute,
             arguments: note.toJson());
       },

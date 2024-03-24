@@ -10,9 +10,8 @@ abstract class RemoteDataSource {
   Future<AuthenticationResponse> login(LoginRequest loginRequest);
 
   //notes
-  Future<OperationStatusResponse> add(
-      AddNoteWithImageRequest addNoteWithImageRequest);
-  
+  Future<OperationStatusResponse> add(AddNoteRequest addNoteRequest);
+
   Future<OperationStatusResponse> edit(EditNoteRequest editNoteRequest);
   Future<OperationStatusResponse> delete(DeleteNoteRequest deleteNoteRequest);
   Future<GetNotesResponse> view(ViewNotesRequest viewNotesRequest);
@@ -42,28 +41,20 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
 //notes
   @override
-  Future<OperationStatusResponse> add(
-      AddNoteWithImageRequest addNoteWithImageRequest) async {
-          return await _appServiceClient.add(addNoteWithImageRequest.title,
-          addNoteWithImageRequest.content, addNoteWithImageRequest.userId,
-          image: addNoteWithImageRequest.image);
-    // if (addNoteWithImageRequest.image != null) {
-    
-    // } else {
-    //   return await _appServiceClient.add(
-    //     addNoteWithImageRequest.title,
-    //     addNoteWithImageRequest.content,
-    //     addNoteWithImageRequest.userId,
-    //   );
-    // }
+  Future<OperationStatusResponse> add(AddNoteRequest addNoteRequest) async {
+    return await _appServiceClient.add(
+        addNoteRequest.title, addNoteRequest.content, addNoteRequest.userId,
+        image: addNoteRequest.image);
   }
-
-  
 
   @override
   Future<OperationStatusResponse> edit(EditNoteRequest editNoteRequest) async {
     return await _appServiceClient.edit(
-        editNoteRequest.noteId, editNoteRequest.title, editNoteRequest.content);
+        editNoteRequest.noteId,
+        editNoteRequest.title,
+        editNoteRequest.content,
+        editNoteRequest.imageName,
+        newImage: editNoteRequest.newImage);
   }
 
   @override

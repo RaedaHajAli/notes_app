@@ -24,7 +24,7 @@ abstract class AppServiceClient {
 
   //notes
 
-  @POST('notes/addwithimage.php')
+  @POST('notes/add.php')
   @MultiPart()
   Future<OperationStatusResponse> add(
     @Part() String title,
@@ -33,17 +33,23 @@ abstract class AppServiceClient {
     @Part() File? image,
   });
 
-  
+//Delete
+  @POST('notes/delete.php')
+  @MultiPart()
+  Future<OperationStatusResponse> delete(@Part(name: 'note_id') int noteId,
+      @Part(name: 'image_name') String imageName);
 
-  @DELETE('notes/delete.php')
-  Future<OperationStatusResponse> delete(
-      @Field('note_id') int noteId, @Field('image_name') String imageName);
-  @PUT('notes/edit.php')
+  //Edit
+  @POST('notes/edit.php')
+  @MultiPart()
   Future<OperationStatusResponse> edit(
-    @Field('note_id') int noteId,
-    @Field('title') String title,
-    @Field('content') String content,
-  );
+    @Part(name: 'note_id') int noteId,
+    @Part(name: 'title') String title,
+    @Part(name: 'content') String content,
+     @Part(name: 'image_name') String imageName,
+     {
+    @Part(name: 'new_image') File? newImage,
+  });
   @GET('notes/view.php')
   Future<GetNotesResponse> view(
     @Field('user_id') int userId,

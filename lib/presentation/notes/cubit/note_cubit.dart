@@ -7,7 +7,6 @@ import 'package:fullnoteapp/presentation/common/freezed_data_classes.dart';
 
 import 'package:fullnoteapp/presentation/notes/cubit/note_states.dart';
 
-
 import '../../../app/app_prefs.dart';
 
 import '../../../domain/models/models.dart';
@@ -21,13 +20,13 @@ class NoteCubit extends Cubit<NoteStates> {
   NoteCubit(
     this._viewNoteUseCase,
     this._deleteNoteUseCase,
-    this._addNoteWithImageUseCase,
+    this._addNoteUseCase,
     this._editNoteUseCase,
     this._appPreferences,
   ) : super(InitialNoteState());
   final ViewNoteUseCase _viewNoteUseCase;
   final DeleteNoteUseCase _deleteNoteUseCase;
-  final AddNoteWithImageUseCase _addNoteWithImageUseCase;
+  final AddNoteUseCase _addNoteUseCase;
 
   final EditNoteUseCase _editNoteUseCase;
   final AppPreferences _appPreferences;
@@ -61,14 +60,12 @@ class NoteCubit extends Cubit<NoteStates> {
     }
   }
 
-  Future<void> add(AddNoteWithImageObject addNoteWithImageObject) async {
+  Future<void> add(AddNoteObject addNoteObject) async {
     emit(LoadingAddNoteState());
-    (await _addNoteWithImageUseCase.execute(AddNoteWithImageUseCaseInput(
-            title: addNoteWithImageObject.title,
-            content: addNoteWithImageObject.content,
-            image:
-                //  convertImageFileToString(File(addNoteObject.imagePath)) ??
-                addNoteWithImageObject.image,
+    (await _addNoteUseCase.execute(AddNoteUseCaseInput(
+            title: addNoteObject.title,
+            content: addNoteObject.content,
+            image: addNoteObject.image,
             userId: userId!)))
         .fold((failure) {
       emit(FailureAddNoteState());
@@ -95,45 +92,48 @@ class NoteCubit extends Cubit<NoteStates> {
   Future<void> editNote(EditNoteObject editNoteObject) async {
     emit(LoadingEditNoteState());
     (await _editNoteUseCase.execute(EditNoteUseCaseInput(
-      noteId: editNoteObject.id,
-      title: editNoteObject.title,
-      content: editNoteObject.content,
-      // image:
-      //     convertImageFileToString(File(editNoteObject.imagePath)) ?? 'image',
-    )))
+            noteId: editNoteObject.id,
+            title: editNoteObject.title,
+            content: editNoteObject.content,
+            imageName: editNoteObject.imageName,
+            newImage: editNoteObject.newImage)))
         .fold((failure) {
       emit(FailureEditNoteState());
     }, (operationStatus) {
+      
       emit(SuccessEditeNoteState());
-      getNotes();
+       getNotes();
     });
   }
 
   ImagePicker picker = ImagePicker();
-  File? noteImage;
 
   //Pick Image
   pickImageFromCamera() async {
     var image = await picker.pickImage(source: ImageSource.camera);
     if (image != null) {
-      noteImage = File(image.path);
       print(' **********${image.path}');
       emit(PickImageSuccessNoteState());
+      return File(image.path);
     } else {
-      noteImage = null;
       emit(PickImageFailureNoteState());
+      return null;
     }
   }
 
-  pickImageFromGallery() async {
+  Future<File?> pickImageFromGallery() async {
+    File? file;
     var image = await picker.pickImage(source: ImageSource.gallery);
+
     if (image != null) {
-      noteImage = File(image.path);
+      print(' **********${image.path}');
       emit(PickImageSuccessNoteState());
+      file = File(image.path);
     } else {
-      noteImage = null;
       emit(PickImageFailureNoteState());
+      file = null;
     }
+    return file;
   }
 
   logout() {

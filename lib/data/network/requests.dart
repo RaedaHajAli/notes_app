@@ -25,27 +25,15 @@ class SignupRequest {
 
 //Notes
 //Add Note
-class AddNoteWithImageRequest {
+class AddNoteRequest {
   String title;
   String content;
   File? image;
   int userId;
-  AddNoteWithImageRequest({
+  AddNoteRequest({
     required this.title,
     required this.content,
     required this.image,
-    required this.userId,
-  });
-}
-
-class AddNoteWithoutImageRequest {
-  String title;
-  String content;
-
-  int userId;
-  AddNoteWithoutImageRequest({
-    required this.title,
-    required this.content,
     required this.userId,
   });
 }
@@ -55,10 +43,14 @@ class EditNoteRequest {
   int noteId;
   String title;
   String content;
+  String imageName;
+  File? newImage;
   EditNoteRequest({
     required this.noteId,
     required this.title,
     required this.content,
+    required this.imageName,
+    this.newImage,
   });
 }
 
@@ -66,10 +58,7 @@ class EditNoteRequest {
 class DeleteNoteRequest {
   int noteId;
   String imageName;
-  DeleteNoteRequest({
-    required this.noteId,
-    required this.imageName
-  });
+  DeleteNoteRequest({required this.noteId, required this.imageName});
 }
 
 // view notes

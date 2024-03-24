@@ -9,17 +9,17 @@ import '../models/models.dart';
 import '../repository/repository.dart';
 import 'dart:io';
 
-class AddNoteWithImageUseCase
-    implements BaseUseCase<AddNoteWithImageUseCaseInput, OperationStatus> {
+class AddNoteUseCase
+    implements BaseUseCase<AddNoteUseCaseInput, OperationStatus> {
   final Repository _repository;
-  AddNoteWithImageUseCase(
+  AddNoteUseCase(
     this._repository,
   );
 
   @override
   Future<Either<Failure, OperationStatus>> execute(
-      AddNoteWithImageUseCaseInput input) async {
-    return await _repository.add(AddNoteWithImageRequest(
+      AddNoteUseCaseInput input) async {
+    return await _repository.add(AddNoteRequest(
         title: input.title,
         content: input.content,
         image: input.image,
@@ -27,12 +27,12 @@ class AddNoteWithImageUseCase
   }
 }
 
-class AddNoteWithImageUseCaseInput {
+class AddNoteUseCaseInput {
   String title;
   String content;
   File? image;
   int userId;
-  AddNoteWithImageUseCaseInput({
+  AddNoteUseCaseInput({
     required this.title,
     required this.content,
     required this.image,

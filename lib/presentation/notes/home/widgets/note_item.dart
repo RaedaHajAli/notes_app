@@ -1,19 +1,11 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fullnoteapp/app/constants.dart';
-
-
-
+import 'package:fullnoteapp/presentation/notes/cubit/note_cubit.dart';
+import 'package:fullnoteapp/presentation/notes/cubit/note_states.dart';
 
 import '../../../../../domain/models/models.dart';
 import '../../../resources/color_manager.dart';
-import '../../../resources/images_manager.dart';
-
-
-
-
-
 
 class NoteItem extends StatelessWidget {
   const NoteItem(
@@ -35,34 +27,39 @@ class NoteItem extends StatelessWidget {
       child: Stack(
         alignment: Alignment.topLeft,
         children: [
-          Container(
-            decoration: BoxDecoration(
-                color: backgroundColor, borderRadius: BorderRadius.circular(8)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
+          BlocBuilder<NoteCubit, NoteStates>(
+            builder: (context, state) {
+              return Container(
+                decoration: BoxDecoration(
+                    color: backgroundColor,
+                    borderRadius: BorderRadius.circular(8)),
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.network(
-                      '${Constants.imageUrl}/${note.image}',
-                      // convertStringToUint8List(note.image),
-                      height: 130,
-                      width: 130,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.network(
+                          '${Constants.imageUrl}/${note.image}',
+                          // convertStringToUint8List(note.image),
+                          height: 130,
+                          width: 130,
+                        ),
+                      ],
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
+                      child: Text(
+                        note.title,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600),
+                      ),
+                    )
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
-                  child: Text(
-                    note.title,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.w600),
-                  ),
-                )
-              ],
-            ),
+              );
+            },
           ),
           IconButton(
               onPressed: onPressedDelete,
@@ -76,9 +73,3 @@ class NoteItem extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-

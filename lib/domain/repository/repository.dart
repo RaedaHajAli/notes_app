@@ -10,9 +10,8 @@ abstract class Repository {
   Future<Either<Failure, User>> login(LoginRequest loginRequest);
 
   //notes
-  Future<Either<Failure, OperationStatus>> add(
-      AddNoteWithImageRequest addNoteRequest);
-  
+  Future<Either<Failure, OperationStatus>> add(AddNoteRequest addNoteRequest);
+
   Future<Either<Failure, OperationStatus>> edit(
       EditNoteRequest editNoteRequest);
   Future<Either<Failure, OperationStatus>> delete(

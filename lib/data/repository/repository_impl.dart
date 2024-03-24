@@ -85,7 +85,7 @@ class RepositoryImpl implements Repository {
 
   @override
   Future<Either<Failure, OperationStatus>> add(
-      AddNoteWithImageRequest addNoteRequest) async {
+      AddNoteRequest addNoteRequest) async {
     if (await _networkInfo.isConnected) {
       // there is internet connection
 

@@ -17,18 +17,13 @@ class SignupObject with _$SignupObject {
 }
 
 @freezed
-class AddNoteWithImageObject with _$AddNoteWithImageObject {
-  factory AddNoteWithImageObject(String title, String content, File? image) =
+class AddNoteObject with _$AddNoteObject {
+  factory AddNoteObject(String title, String content, File? image) =
       _AddNoteWithImageObject;
-}
-@freezed
-class AddNoteWithoutImageObject with _$AddNoteWithoutImageObject {
-  factory AddNoteWithoutImageObject(String title, String content) =
-      _AddNoteWithoutImageObject;
 }
 
 @freezed
 class EditNoteObject with _$EditNoteObject {
-  factory EditNoteObject(int id, String title, String content, File image) =
-      _EditNoteObject;
+  factory EditNoteObject(int id, String title, String content, String imageName,
+      File? newImage) = _EditNoteObject;
 }
