@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +31,7 @@ class NoteCubit extends Cubit<NoteStates> {
 
   final EditNoteUseCase _editNoteUseCase;
   final AppPreferences _appPreferences;
+
   int? userId;
 
   User? user;
@@ -44,13 +46,14 @@ class NoteCubit extends Cubit<NoteStates> {
   }
 
   getNotes() async {
+    notes = [];
     emit(LoadingGetNotesState());
     _getUserId();
 
     if (userId != null) {
       (await _viewNoteUseCase.execute(ViewNoteUseCaseInput(userId: userId!)))
           .fold((failure) {
-        emit(FailureGetNotesState());
+        emit(FailureGetNotesState(message: failure.message));
       }, (data) {
         notes = data.notes;
         emit(SuccessGetNotesState());
@@ -60,7 +63,9 @@ class NoteCubit extends Cubit<NoteStates> {
     }
   }
 
+  bool inAsyncCallHome = false;
   Future<void> add(AddNoteObject addNoteObject) async {
+    inAsyncCallHome = true;
     emit(LoadingAddNoteState());
     (await _addNoteUseCase.execute(AddNoteUseCaseInput(
             title: addNoteObject.title,
@@ -68,9 +73,11 @@ class NoteCubit extends Cubit<NoteStates> {
             image: addNoteObject.image,
             userId: userId!)))
         .fold((failure) {
-      emit(FailureAddNoteState());
+      inAsyncCallHome = false;
+      emit(FailureAddNoteState(message: failure.message));
       print(failure.message);
     }, (data) {
+      inAsyncCallHome = false;
       emit(SuccessAddNoteState());
 
       getNotes();
@@ -89,7 +96,9 @@ class NoteCubit extends Cubit<NoteStates> {
     });
   }
 
+  bool inAsyncCallDetails = false;
   Future<void> editNote(EditNoteObject editNoteObject) async {
+    inAsyncCallDetails = true;
     emit(LoadingEditNoteState());
     (await _editNoteUseCase.execute(EditNoteUseCaseInput(
             noteId: editNoteObject.id,
@@ -98,11 +107,12 @@ class NoteCubit extends Cubit<NoteStates> {
             imageName: editNoteObject.imageName,
             newImage: editNoteObject.newImage)))
         .fold((failure) {
+          inAsyncCallDetails = false;
       emit(FailureEditNoteState());
     }, (operationStatus) {
-      
+      inAsyncCallDetails = false;
       emit(SuccessEditeNoteState());
-       getNotes();
+      getNotes();
     });
   }
 
@@ -127,11 +137,12 @@ class NoteCubit extends Cubit<NoteStates> {
 
     if (image != null) {
       print(' **********${image.path}');
-      emit(PickImageSuccessNoteState());
+
       file = File(image.path);
+      emit(PickImageSuccessNoteState());
     } else {
-      emit(PickImageFailureNoteState());
       file = null;
+      emit(PickImageFailureNoteState());
     }
     return file;
   }

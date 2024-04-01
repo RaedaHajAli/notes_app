@@ -1,6 +1,7 @@
 class AppStrings {
   //screens
   static const String noteApp = 'Note App';
+   static const String logo = 'logo.png';
   static const String noteSubTitle = 'Note taking made easier';
   static const String userName = 'User name';
   static const String email = 'Email';
@@ -25,6 +26,14 @@ class AppStrings {
   static const String loading= 'Loading';
   static const String photoGallery = 'Open Gallery';
   static const String photoCamera = 'Open Camera';
+static const String thisFieldIsRequired=  'This field is required ';
+static const String emptyBody='There isn\'t any note yet';
+static const String someThingWentWrong= 'Something went wrong ';
+static const String save='Save';
+static const String addYourNoteContent='Add your note content...';
+static const String title= 'Title';
+static const String addImage='Add Image';
+static const String add='Add';
 
   //error strings
   static const String unauthorizedError = 'User unauthorized';

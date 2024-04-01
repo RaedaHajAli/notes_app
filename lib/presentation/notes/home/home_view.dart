@@ -3,11 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fullnoteapp/presentation/notes/cubit/note_cubit.dart';
 import 'package:fullnoteapp/presentation/notes/cubit/note_states.dart';
 
+import 'package:fullnoteapp/presentation/notes/home/widgets/empty_home.dart';
+
 import 'package:fullnoteapp/presentation/resources/color_manager.dart';
 
 import '../../../../domain/models/models.dart';
 
 import '../../resources/route_manager.dart';
+
 import 'widgets/fab.dart';
 import 'widgets/note_item.dart';
 
@@ -39,7 +42,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.deepPurple,
-      appBar: buildHomeAppBar(context),
+      appBar:buildHomeAppBar(context),
       body: _getContentWidget(),
       floatingActionButton: const Fab(),
     );
@@ -68,11 +71,7 @@ class _HomeViewState extends State<HomeView> {
     return BlocBuilder<NoteCubit, NoteStates>(builder: (context, state) {
       notes = cubit.notes;
       if (notes.isEmpty) {
-        return const Center(
-            child: Text(
-          'There isn\'t any note yet',
-          style: TextStyle(color: AppColor.white, fontSize: 25),
-        ));
+        return const EmptyHome();
       } else {
         return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
@@ -85,8 +84,7 @@ class _HomeViewState extends State<HomeView> {
                   Color backgroundColor =
                       AppColor.notesColor[index % AppColor.notesColor.length];
 
-                  return buildNoteItem(
-                      backgroundColor, notes[index], context);
+                  return buildNoteItem(backgroundColor, notes[index], context);
                 })));
       }
     });
@@ -101,9 +99,7 @@ class _HomeViewState extends State<HomeView> {
         cubit.deleteNote(note.id, note.image);
       },
       onTapNote: () {
-        // Navigator.pushNamedAndRemoveUntil(
-        //     context, Routes.noteDetailsRoute, (route) => false,
-        //     arguments: note.toJson());
+       
         Navigator.pushNamed(context, Routes.noteDetailsRoute,
             arguments: note.toJson());
       },

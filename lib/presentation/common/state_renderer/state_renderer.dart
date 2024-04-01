@@ -39,7 +39,9 @@ class StateRenderer extends StatelessWidget {
   Widget _getStateWidget(BuildContext context) {
     switch (stateRendererType) {
       case StateRendererType.popupLoadingState:
-        return _getPopupDialog([_getAnimatedImage(JsonAssets.loading)]);
+        return _getPopupDialog([
+          // _getMessage(message),
+          _getAnimatedImage(JsonAssets.loading)]);
       case StateRendererType.popupErrorState:
         return _getPopupDialog([
           _getAnimatedImage(JsonAssets.error),
@@ -88,7 +90,9 @@ class StateRenderer extends StatelessWidget {
     return SizedBox(
         height: 100,
         width: 100,
-        child: Lottie.asset(animationName));
+        child:
+        Lottie.asset(animationName)
+        );
   }
 
   Widget _getMessage(String message) {

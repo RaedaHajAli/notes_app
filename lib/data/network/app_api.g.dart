@@ -13,7 +13,7 @@ class _AppServiceClient implements AppServiceClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://192.168.1.139:8012/noteapp/';
+    baseUrl ??= 'https://raedahajali.000webhostapp.com/';
   }
 
   final Dio _dio;

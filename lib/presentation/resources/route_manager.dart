@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:fullnoteapp/app/di.dart';
+import 'package:fullnoteapp/domain/usecase/login_usecase.dart';
+import 'package:fullnoteapp/domain/usecase/signup_usecase.dart';
 import 'package:fullnoteapp/presentation/auth/login/cubit/login_cubit.dart';
 
 import 'package:fullnoteapp/presentation/auth/login/view/login_view.dart';
-import 'package:fullnoteapp/presentation/auth/signup/view/cubit/signup_cubit.dart';
+import 'package:fullnoteapp/presentation/auth/signup/cubit/signup_cubit.dart';
 
 import 'package:fullnoteapp/presentation/auth/signup/view/signup_view.dart';
 
@@ -34,14 +36,14 @@ class RouteGenerator {
         initLoginModule();
         return MaterialPageRoute(
             builder: (_) => BlocProvider<LoginCubit>(
-                  create: (context) => LoginCubit(),
+                  create: (context) => LoginCubit(instance<LoginUseCase>()),
                   child: const LoginView(),
                 ));
       case Routes.signupRoute:
         initSignupModule();
         return MaterialPageRoute(
             builder: (_) => BlocProvider<SignupCubit>(
-                  create: (context) => SignupCubit(),
+                  create: (context) => SignupCubit(instance<SignupUseCase>()),
                   child: const SignupView(),
                 ));
       case Routes.homeRoute:

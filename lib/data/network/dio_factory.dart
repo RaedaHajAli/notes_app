@@ -4,6 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../app/constants.dart';
+import 'dart:convert';
+
+String basicAuth = 'Basic ' + '****';
 
 const String APPLICATION_JSON = 'application/json';
 const String CONTENT_TYPE = 'content-type';
@@ -20,7 +23,8 @@ class DioFactory {
     Map<String, String> headers = {
       CONTENT_TYPE: APPLICATION_JSON,
       ACCEPT: '*/*',
-      CONNECTION: KEEP_ALIVE
+      CONNECTION: KEEP_ALIVE,
+      AUTHORIZATION: basicAuth
     };
 
     dio.options = BaseOptions(

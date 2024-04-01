@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fullnoteapp/app/constants.dart';
 import 'package:fullnoteapp/presentation/notes/cubit/note_cubit.dart';
 import 'package:fullnoteapp/presentation/notes/cubit/note_states.dart';
+import 'package:fullnoteapp/presentation/resources/images_manager.dart';
+import 'package:fullnoteapp/presentation/resources/strings_manager.dart';
 
 import '../../../../../domain/models/models.dart';
 import '../../../resources/color_manager.dart';
@@ -39,12 +41,17 @@ class NoteItem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.network(
-                          '${Constants.imageUrl}/${note.image}',
-                          // convertStringToUint8List(note.image),
-                          height: 130,
-                          width: 130,
-                        ),
+                        note.image != AppStrings.logo
+                            ? Image.network(
+                                '${Constants.imageUrl}/${note.image}',
+                                // convertStringToUint8List(note.image),
+                                height: 130,
+                                width: 130,
+                              )
+                            : Image.asset(AppImages.logo,
+                            height: 130,
+                                width: 130,
+                            ),
                       ],
                     ),
                     Padding(
