@@ -7,6 +7,7 @@
  <br>
 ## Login Screen 
 ### Login with email and password
+ <br>
  <img src="https://github.com/RaedaHajAli/notes_app/assets/108256100/f9e0a993-7d9b-4fb1-a02f-c44e1c3b2883" width=30% height=30%>
   <br>
   ### Login Loading
