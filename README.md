@@ -1,16 +1,17 @@
-# fullnoteapp
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Note App
+Sign up Screen
+ <img src="(https://github.com/RaedaHajAli/notes_app/assets/108256100/6f34baa5-1184-4581-8ee7-a57a195d34a4">
+ Login Screen
+ <img src="https://github.com/RaedaHajAli/notes_app/assets/108256100/f9e0a993-7d9b-4fb1-a02f-c44e1c3b2883">
+ Login Screen with Loading
+  <img src="https://github.com/RaedaHajAli/notes_app/assets/108256100/7543e0b7-eda7-4afa-a6d2-bba727e7f8a0">
+  Login Screen with Error
+   <img src="(https://github.com/RaedaHajAli/notes_app/assets/108256100/316e7f49-c33f-4d39-901e-208017170e36">
+   Empty Home Screem
+   <img src="https://github.com/RaedaHajAli/notes_app/assets/108256100/36c784e9-2ef9-44ff-9caf-6ae7596d6be3">
+   Home Screen
+   <img src="https://github.com/RaedaHajAli/notes_app/assets/108256100/fc74ac1b-85e0-434d-89d6-2399b810113f">
+   Add Note
+   <img src="https://github.com/RaedaHajAli/notes_app/assets/108256100/d12d2862-6588-4ea6-ab58-0e1caa3db2a5">
+   Edit Note Screen 
+   <img src="https://github.com/RaedaHajAli/notes_app/assets/108256100/fca67e3e-e245-4c72-bed6-21dabb7df859">
